@@ -1,14 +1,14 @@
 /* AC2027 SoCal — shared stylesheet */
 
-@font-face{font-family:'Oswald';font-weight:300;font-style:normal;font-display:swap;src:url(fonts/Oswald-300.woff2) format('woff2')}
-@font-face{font-family:'Oswald';font-weight:400;font-style:normal;font-display:swap;src:url(fonts/Oswald-400.woff2) format('woff2')}
-@font-face{font-family:'Oswald';font-weight:500;font-style:normal;font-display:swap;src:url(fonts/Oswald-500.woff2) format('woff2')}
-@font-face{font-family:'Oswald';font-weight:600;font-style:normal;font-display:swap;src:url(fonts/Oswald-600.woff2) format('woff2')}
-@font-face{font-family:'Poppins';font-weight:300;font-style:normal;font-display:swap;src:url(fonts/Poppins-300.woff2) format('woff2')}
-@font-face{font-family:'Poppins';font-weight:400;font-style:normal;font-display:swap;src:url(fonts/Poppins-400.woff2) format('woff2')}
-@font-face{font-family:'Poppins';font-weight:500;font-style:normal;font-display:swap;src:url(fonts/Poppins-500.woff2) format('woff2')}
-@font-face{font-family:'Poppins';font-weight:600;font-style:normal;font-display:swap;src:url(fonts/Poppins-600.woff2) format('woff2')}
-@font-face{font-family:'Great Vibes';font-weight:400;font-style:normal;font-display:swap;src:url(fonts/GreatVibes-400.woff2) format('woff2')}
+@font-face{font-family:'Oswald';font-weight:300;font-style:normal;font-display:swap;src:url(../fonts/Oswald-300.woff2) format('woff2')}
+@font-face{font-family:'Oswald';font-weight:400;font-style:normal;font-display:swap;src:url(../fonts/Oswald-400.woff2) format('woff2')}
+@font-face{font-family:'Oswald';font-weight:500;font-style:normal;font-display:swap;src:url(../fonts/Oswald-500.woff2) format('woff2')}
+@font-face{font-family:'Oswald';font-weight:600;font-style:normal;font-display:swap;src:url(../fonts/Oswald-600.woff2) format('woff2')}
+@font-face{font-family:'Poppins';font-weight:300;font-style:normal;font-display:swap;src:url(../fonts/Poppins-300.woff2) format('woff2')}
+@font-face{font-family:'Poppins';font-weight:400;font-style:normal;font-display:swap;src:url(../fonts/Poppins-400.woff2) format('woff2')}
+@font-face{font-family:'Poppins';font-weight:500;font-style:normal;font-display:swap;src:url(../fonts/Poppins-500.woff2) format('woff2')}
+@font-face{font-family:'Poppins';font-weight:600;font-style:normal;font-display:swap;src:url(../fonts/Poppins-600.woff2) format('woff2')}
+@font-face{font-family:'Great Vibes';font-weight:400;font-style:normal;font-display:swap;src:url(../fonts/GreatVibes-400.woff2) format('woff2')}
 
 :root{
   --navy:#0D0745; --shore:#FAF8F5; --gold:#FDCE3E; --orange:#FDA04D;
