@@ -318,3 +318,82 @@ td.r{text-align:right;}
 
 nav a.cur{border-bottom-color:var(--maroon);}
 .crumb a{color:inherit;}
+
+/* ---- travel / things-to-do / disneyland pages ---- */
+.two{display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-top:28px;}
+@media(max-width:760px){.two{grid-template-columns:1fr;gap:28px;}}
+.dl{margin:0;}
+.dl .row{display:flex;gap:16px;padding:12px 0;border-bottom:1px solid var(--navy-13);font-size:14.5px;}
+.dl .row:last-child{border-bottom:none;}
+.dl dt{flex:0 0 40%;font-family:Oswald,sans-serif;font-weight:500;font-size:12.5px;letter-spacing:.05em;margin:0;}
+.dl dd{margin:0;color:var(--navy-58);line-height:1.55;}
+
+.statgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--navy-13);
+  border:1px solid var(--navy-13);border-radius:16px;overflow:hidden;margin-top:32px;}
+.statcard{background:var(--shore);padding:26px 24px;}
+.statcard b{display:block;font-family:Oswald,sans-serif;font-weight:600;font-size:39px;color:var(--maroon);line-height:1;}
+.statcard span{display:block;margin-top:8px;font-size:13.5px;color:var(--navy-58);line-height:1.5;}
+@media(max-width:640px){.statgrid{grid-template-columns:1fr;}}
+
+.maplayout{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:32px;align-items:start;margin-top:32px;}
+@media(max-width:900px){.maplayout{grid-template-columns:1fr;gap:24px;}}
+.mapbox{position:relative;}
+svg.usmap{width:100%;height:auto;display:block;overflow:visible;}
+.st{fill:var(--gold);stroke:var(--navy);stroke-width:1.1;cursor:pointer;transition:fill .15s ease;outline:none;}
+.st:hover{fill:var(--orange);}
+.st[aria-current="true"]{fill:var(--navy);}
+.st:focus-visible{fill:var(--orange);stroke-width:2.4;}
+.dcdot circle{fill:var(--gold);stroke:var(--navy);stroke-width:1.1;cursor:pointer;}
+.dcdot[aria-current="true"] circle{fill:var(--navy);}
+.dcdot text{fill:var(--navy-58);font-family:Poppins,sans-serif;font-size:12px;font-weight:400;}
+
+.panel{background:var(--shore);border:1px solid var(--navy-13);border-radius:14px;padding:22px;}
+.panel .pk{font-family:Oswald,sans-serif;text-transform:uppercase;letter-spacing:.16em;font-size:11px;color:var(--maroon);}
+.panel h3{margin:0 0 2px;color:var(--navy);font-size:22px;letter-spacing:.02em;}
+.panel .pk.air,.panel .pk.rail{margin:1.4rem 0 0;}
+.panel .pk.air.first{margin-top:1rem;}
+.badge{display:inline-flex;align-items:center;gap:7px;margin-top:.7rem;padding:5px 11px;
+  border-radius:100px;font-family:Oswald,sans-serif;font-size:12px;font-weight:500;letter-spacing:.02em;}
+.badge.nonstop{background:var(--gold);color:var(--navy);}
+.badge.seasonal{background:var(--pink);color:var(--navy);}
+.badge.connect{background:var(--navy);color:var(--shore);}
+.routes{list-style:none;margin:1.1rem 0 0;padding:0;border-top:1px solid var(--navy-13);}
+.routes li{display:flex;justify-content:space-between;gap:14px;align-items:baseline;
+  padding:11px 0;border-bottom:1px solid var(--navy-13);font-size:14px;}
+.routes .from{color:var(--navy);}
+.routes .from em{font-style:normal;color:var(--navy-58);font-size:12px;display:block;letter-spacing:.03em;}
+.routes .t{color:var(--maroon);font-family:Oswald,sans-serif;font-size:15px;white-space:nowrap;}
+.panel .note{margin:1rem 0 0;font-size:13.5px;color:var(--navy-58);line-height:1.55;}
+.picker{margin-top:0;}
+.picker label{display:block;font-family:Oswald,sans-serif;font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--navy-58);margin-bottom:6px;}
+.picker select{width:100%;padding:11px 12px;font-family:Poppins,sans-serif;font-size:14.5px;
+  color:var(--navy);background:var(--shore);border:1px solid var(--navy-13);border-radius:6px;}
+.caveat{margin-top:18px;font-size:12.5px;color:var(--navy-58);line-height:1.55;max-width:70ch;font-style:italic;}
+
+details.tbl{margin-top:30px;}
+details.tbl summary{cursor:pointer;font-family:Oswald,sans-serif;text-transform:uppercase;
+  letter-spacing:.1em;font-size:12.5px;color:var(--maroon);}
+details.tbl .scroll{margin-top:16px;}
+
+.acards{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--navy-13);
+  border:1px solid var(--navy-13);border-radius:16px;overflow:hidden;margin-top:30px;}
+.acard{background:var(--shore);padding:24px 22px;border-top:3px solid transparent;}
+.acard.closest{border-top-color:var(--maroon);}
+.acard .code{font-family:Oswald,sans-serif;font-weight:600;font-size:26px;color:var(--navy);line-height:1;}
+.acard.closest .code{color:var(--maroon);}
+.acard .nm{font-size:13.5px;font-weight:500;margin-top:5px;}
+.acard .mi{font-family:Oswald,sans-serif;font-size:15px;color:var(--maroon);margin-top:10px;}
+.acard .why{font-size:13px;color:var(--navy-58);margin-top:8px;line-height:1.5;}
+@media(max-width:860px){.acards{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:520px){.acards{grid-template-columns:1fr;}}
+
+.cardgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:34px;}
+@media(max-width:900px){.cardgrid{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:560px){.cardgrid{grid-template-columns:1fr;}}
+.infocard{background:var(--shore);border:1px solid var(--navy-13);border-radius:14px;padding:24px 22px;
+  display:flex;flex-direction:column;}
+.infocard h3{font-size:18px;letter-spacing:.03em;margin:0 0 9px;}
+.infocard p{font-size:14px;color:var(--navy-58);line-height:1.6;margin:0;}
+.infocard .tag{font-family:Oswald,sans-serif;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--maroon);margin:0 0 10px;}
