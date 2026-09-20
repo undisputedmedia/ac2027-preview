@@ -20,7 +20,7 @@
   --measure:66ch;
 }
 *{box-sizing:border-box;}
-html{scroll-behavior:smooth;}
+html{scroll-behavior:smooth;scroll-padding-top:92px;}
 body{
   margin:0;background:var(--shore);color:var(--navy);
   font-family:Poppins,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
@@ -42,10 +42,11 @@ header{background:var(--shore);border-bottom:1px solid var(--navy-13);position:s
 nav{margin-left:auto;display:flex;align-items:center;gap:25px;}
 nav a{font-family:Oswald,sans-serif;font-size:14px;letter-spacing:.09em;text-transform:uppercase;text-decoration:none;padding:6px 0;border-bottom:2px solid transparent;}
 nav a:hover{border-bottom-color:var(--maroon);}
-.navcta{font-family:Oswald,sans-serif;font-size:13px;letter-spacing:.09em;text-transform:uppercase;text-decoration:none;background:var(--gold);color:var(--navy);padding:10px 20px;border-radius:999px;font-weight:500;}
+.navcta{font-family:Oswald,sans-serif;font-size:13px;letter-spacing:.09em;text-transform:uppercase;text-decoration:none;background:var(--navy);color:var(--shore);padding:10px 20px;border-radius:999px;font-weight:500;}
 .navtoggle{display:none;}
 @media(max-width:1020px){
   nav{display:none;}
+  .navcta{font-size:10.5px;padding:9px 14px;letter-spacing:.02em;white-space:nowrap;}
   .navtoggle{display:block;margin-left:auto;font-family:Oswald,sans-serif;font-size:13px;letter-spacing:.09em;text-transform:uppercase;background:none;border:1px solid var(--navy-28);color:var(--navy);padding:9px 16px;border-radius:999px;}
   .brandtext .l2{display:none;}
 }
@@ -142,7 +143,7 @@ p{margin:0 0 17px;max-width:var(--measure);}
 .ratelist li:last-child{border-bottom:none;}
 .ratelist b{font-weight:500;color:var(--navy);text-align:right;}
 .pull{border-left:3px solid var(--gold);padding-left:20px;font-size:var(--t-bodyl);font-weight:300;line-height:1.55;margin:0 0 24px;color:var(--shore);}
-@media(max-width:880px){.hotelgrid{grid-template-columns:1fr;gap:34px;}.rate{font-size:46px;}}
+@media(max-width:880px){.hotelgrid{grid-template-columns:1fr;gap:34px;}.rate{font-size:46px;}.ratecard{order:-1;}}
 
 /* travel */
 .travel{background:rgba(13,7,69,.035);}
