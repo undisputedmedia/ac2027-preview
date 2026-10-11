@@ -85,7 +85,7 @@
 
   /* buttons: items="Label|url;Label|url" (url PASSKEY = hotel link) styles="navy,outline" align="left|center" */
   define('ac-buttons', function (el) {
-    var items = (el.getAttribute('items') || 'Reserve Your Room|PASSKEY;Get Notified|/registration').split(';');
+    var items = (el.getAttribute('items') || 'Reserve Your Room|PASSKEY;Get Notified|/get-notified').split(';');
     var styles = (el.getAttribute('styles') || 'navy,outline').split(',');
     var align = el.getAttribute('align') === 'left' ? 'flex-start' : 'center';
     var html = items.map(function (it, i) {
@@ -99,8 +99,8 @@
   /* footer links (the canonical facts block stays native text beside it) */
   define('ac-footer-links', function () {
     var pages = [['/', 'Home'], ['/about', 'About the Convention'], ['/hotel', 'Hotel &amp; Room Block'], ['/registration', 'Registration'],
-      ['/faq', 'FAQ'], ['/host-parish', 'Host Parish'], ['/contact', 'Contact']];
-    var social = [['https://instagram.com/ac2027socal', 'Instagram'], ['https://facebook.com/ac2027socal', 'Facebook'], ['https://youtube.com/@ac2027socal', 'YouTube']];
+      ['/schedule', 'Schedule'], ['/faq', 'FAQ'], ['/host-parish', 'Host Parish'], ['/contact', 'Contact']];
+    var social = [['https://instagram.com/ac2027socal', 'Instagram'], ['https://facebook.com/ac2027socal', 'Facebook'], ['https://youtube.com/@ac2027socal', 'YouTube'], ['https://x.com/ac2027socal', 'X'], ['https://www.tiktok.com/@ac2027socal', 'TikTok']];
     function col(t, list) {
       return '<div><h4>' + t + '</h4><ul>' + list.map(function (l) { return '<li><a href="' + l[0] + '">' + l[1] + '</a></li>'; }).join('') + '</ul></div>';
     }

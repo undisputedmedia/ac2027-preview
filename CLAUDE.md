@@ -74,7 +74,7 @@ strings in circulation and that is a known problem.
 
 ## Facts — do not change without checking
 
-- Dates: **July 19–25, 2027** (Monday through Sunday). Still pending exec confirmation; the preview ribbon says so.
+- Dates: **July 19–25, 2027** (Monday through Sunday). Confirmed by the exec team (Oct 11, 2026).
 - Venue: Hilton Anaheim, 777 W Convention Way, Anaheim, CA 92802
 - Host: Saint Andrew Orthodox Christian Church, Riverside, California
 - Rooms: $209/night, block runs July 17–25
@@ -93,7 +93,7 @@ hotel only. Event registration opens later this year.*
   `AC2027-master-lockup-REPAIRED.png` and should replace this file.
 - The mark has no true reversed version. It cannot sit on Night Navy.
 - Schedule day assignments are partly inferred. General Assembly on Thursday is
-  from the FAQ doc; the Grand Banquet on Saturday is a guess.
+  from the FAQ doc. Other days show "Coming soon" until the committee confirms them.
 - Photography is one stock frame. Real St Andrew footage is the gap.
 
 ## Deploying
