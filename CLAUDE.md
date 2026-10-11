@@ -12,7 +12,13 @@ index.html          Home — hero, facts, hotel, invitation, week, travel, signu
 about.html          What is the Convention — Q&A, host parish, venue
 schedule.html       Week structure (program NOT confirmed)
 sponsorships.html   Tiers, event sponsorships, Legacy Journal rates
-css/site.css        Every style. Shared by all four pages.
+hotel.html          Hotel & room block — rate card, booking/payment, Riverside note
+faq.html            25 Q&As + FAQPage JSON-LD (schema text must match visible text)
+registration.html   How registration works — not open yet, hands off later
+contact.html        info@ac2027socal.com + facts sidecard
+travel.html, things-to-do.html, media.html, legal pages, disneyland.html (unlisted)
+css/site.css        Every style. Shared by all pages.
+js/nav.js           Mobile Menu toggle (below 1100px)
 fonts/              Oswald 300/400/500/600, Poppins 300/400/500/600, Great Vibes 400
 img/mark.png        Convention mark, transparent
 img/sunset.jpg      Hero photograph
@@ -69,7 +75,7 @@ strings in circulation and that is a known problem.
 - Dates: **July 19–25, 2027** (Monday through Sunday). Still pending exec confirmation; the preview ribbon says so.
 - Venue: Hilton Anaheim, 777 W Convention Way, Anaheim, CA 92802
 - Host: Saint Andrew Orthodox Christian Church, Riverside, California
-- Rooms: $209/night, block runs July 17–28
+- Rooms: $209/night, block runs July 17–25
 - Booking: https://book.passkey.com/go/2027SoCalAntiochianArchdiocese
 - Contact: info@ac2027socal.com
 

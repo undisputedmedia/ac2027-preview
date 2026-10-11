@@ -44,7 +44,7 @@ nav a{font-family:Oswald,sans-serif;font-size:14px;letter-spacing:.09em;text-tra
 nav a:hover{border-bottom-color:var(--maroon);}
 .navcta{font-family:Oswald,sans-serif;font-size:13px;letter-spacing:.09em;text-transform:uppercase;text-decoration:none;background:var(--navy);color:var(--shore);padding:10px 20px;border-radius:999px;font-weight:500;}
 .navtoggle{display:none;}
-@media(max-width:1020px){
+@media(max-width:1100px){
   nav{display:none;}
   .navcta{font-size:10.5px;padding:9px 14px;letter-spacing:.02em;white-space:nowrap;}
   .navtoggle{display:block;margin-left:auto;font-family:Oswald,sans-serif;font-size:13px;letter-spacing:.09em;text-transform:uppercase;background:none;border:1px solid var(--navy-28);color:var(--navy);padding:9px 16px;border-radius:999px;}
@@ -442,3 +442,37 @@ details.tbl .scroll{margin-top:16px;}
 .flegal a{color:rgba(250,248,245,.7);text-decoration:none;margin-right:18px;}
 .flegal a:last-child{margin-right:0;}
 .flegal a:hover{color:var(--gold);}
+
+/* ---- mobile menu (js/nav.js) ---- */
+@media(max-width:1100px){
+  header.navopen nav{display:flex;flex-direction:column;align-items:stretch;gap:0;position:absolute;left:0;right:0;top:76px;
+    background:var(--shore);border-bottom:1px solid var(--navy-13);padding:6px 22px 14px;box-shadow:0 18px 30px -22px rgba(13,7,69,.4);}
+  header.navopen nav a{padding:13px 0;border-bottom:1px solid var(--navy-13);}
+  header.navopen nav a:last-child{border-bottom:none;}
+}
+
+/* ---- hotel / faq / registration / contact pages ---- */
+.standfirst{font-family:Oswald,sans-serif;font-weight:500;font-size:15px;letter-spacing:.1em;text-transform:uppercase;color:var(--maroon);margin:0 0 8px;}
+.ratenote{font-size:12.5px;color:var(--navy-58);text-align:center;margin:14px auto 0;line-height:1.5;}
+.hotel .notice-dark{border-left:3px solid var(--gold);padding-left:20px;margin-top:26px;}
+.hotel .notice-dark p{margin:0;color:var(--shore);font-weight:500;}
+.alt{background:rgba(13,7,69,.035);}
+.jump{display:flex;flex-wrap:wrap;gap:10px;margin:22px 0 0;padding:0;list-style:none;}
+.jump a{font-family:Oswald,sans-serif;font-size:12.5px;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;
+  padding:8px 16px;border-radius:999px;box-shadow:inset 0 0 0 1px var(--navy-28);display:inline-block;}
+.jump a:hover{background:var(--navy);color:var(--shore);box-shadow:none;}
+.faqgroup + .faqgroup{margin-top:64px;}
+.faqgroup > h2{font-size:var(--t-sub);letter-spacing:.06em;text-transform:uppercase;color:var(--maroon);margin-bottom:26px;}
+.qa a{color:var(--maroon);}
+.bigmail{font-family:Oswald,sans-serif;font-weight:500;font-size:var(--t-d2);line-height:1.15;color:var(--maroon);text-decoration:none;word-break:break-word;}
+.bigmail:hover{text-decoration:underline;}
+.status{display:inline-flex;align-items:center;gap:9px;font-family:Oswald,sans-serif;font-size:13px;letter-spacing:.14em;text-transform:uppercase;
+  background:var(--navy);color:var(--gold);padding:8px 16px;border-radius:999px;margin:0 0 22px;}
+.status::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--gold);}
+@media(max-width:900px){.bigmail{font-size:27px;}}
+.dl dd,.qa p{overflow-wrap:anywhere;}
+/* rate figure: .hotel p was overriding .rate on navy sections */
+.ratecard .rate{color:var(--maroon);}
+.ratecard .ratenote{color:var(--navy-58);}
+nav a,.navcta{white-space:nowrap;}
+@media(max-width:1240px){nav{gap:17px;}.brandtext .l2{display:none;}}
