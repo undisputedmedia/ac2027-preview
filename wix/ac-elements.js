@@ -149,7 +149,7 @@
       'h4{font-family:Oswald,sans-serif;font-weight:500;font-size:13px;letter-spacing:.2em;text-transform:uppercase;color:' + GOLD + ';margin:0 0 16px}' +
       'ul{list-style:none;padding:0;margin:0}li{margin-bottom:10px;font-size:14px}' +
       'a{color:rgba(250,248,245,.86);text-decoration:none}a:hover{color:' + GOLD + '}' +
-      '@media(max-width:600px){.g{grid-template-columns:1fr}}</style>' +
+      '@media(max-width:400px){.g{grid-template-columns:1fr}}</style>' +
       '<div class="g">' + col('Pages', pages) + col('Follow Us', social) + '</div>';
   });
 })();
