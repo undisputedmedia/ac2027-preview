@@ -2,12 +2,12 @@
    Text that crawlers must read lives in native Wix text, not here.
    Wix: Add > Embed Code > Custom Element > Server URL =
    https://undisputedmedia.github.io/ac2027-preview/wix/ac-elements.js
-   Tags: ac-header, ac-ratecard, ac-buttons, ac-footer-links
+   Tags: ac-header, ac-ratecard, ac-buttons, ac-hero-bg, ac-footer-links
    Keep this file ASCII-only (use \u escapes) so it renders the same under any charset. */
 (function () {
   var ROOT = 'https://undisputedmedia.github.io/ac2027-preview/';
   if (!document.getElementById('ac-fonts')) {
-    var f = [['Oswald', 500], ['Oswald', 600], ['Poppins', 400], ['Poppins', 500]]
+    var f = [['Oswald', 500], ['Oswald', 600], ['Poppins', 400], ['Poppins', 500], ['GreatVibes', 400]]
       .map(function (x) { return "@font-face{font-family:'" + x[0] + "';font-weight:" + x[1] +
         ";font-display:swap;src:url(" + ROOT + 'fonts/' + x[0] + '-' + x[1] + ".woff2) format('woff2')}"; }).join('');
     var s = document.createElement('style'); s.id = 'ac-fonts'; s.textContent = f;
@@ -19,7 +19,7 @@
   var BASE = ':host{display:block;font-family:Poppins,Arial,sans-serif;color:' + NAVY + ';box-sizing:border-box}*{box-sizing:border-box}' +
     '.btn{display:inline-block;font-family:Oswald,sans-serif;font-weight:500;font-size:15px;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;padding:16px 34px;border-radius:999px;line-height:1.2;text-align:center}' +
     '.navy{background:' + NAVY + ';color:' + SHORE + '}.gold{background:' + GOLD + ';color:' + NAVY + '}' +
-    '.outline{color:' + NAVY + ';box-shadow:inset 0 0 0 1.5px rgba(13,7,69,.28)}.outline-w{color:#fff;box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.6)}' +
+    '.outline{color:' + NAVY + ';box-shadow:inset 0 0 0 1.5px rgba(13,7,69,.28)}.outline-w{color:#fff;box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.6)}.white{background:#fff;color:' + NAVY + ';box-shadow:0 10px 15px -3px rgba(0,0,0,.12)}' +
     '.btn:hover{filter:brightness(.95)}';
   var HOOKS = {};
   function esc(t) { return String(t).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
@@ -95,6 +95,23 @@
     return '<style>' + BASE + '.row{display:flex;gap:13px;flex-wrap:wrap;justify-content:' + align + '}' +
       '@media(max-width:600px){.btn{width:100%}}</style><div class="row">' + html + '</div>';
   }, ['items', 'styles', 'align']);
+
+  /* hero background: photo, sunset wash, mark and script line. Decorative only:
+     the H1, descriptor and note sit on top as native Wix text. Stretch it to the section. */
+  define('ac-hero-bg', function () {
+    var wash = 'linear-gradient(180deg,rgba(253,236,226,.94) 0%,rgba(252,212,188,.80) 9%,rgba(251,199,168,.62) 18%,' +
+      'rgba(250,190,152,.52) 28%,rgba(250,172,136,.54) 42%,rgba(244,133,105,.62) 58%,rgba(198,74,80,.74) 72%,' +
+      'rgba(150,48,70,.86) 86%,rgba(125,38,65,.94) 100%)';
+    return '<style>:host{display:block;position:relative;overflow:hidden;height:100%;min-height:100%}' +
+      '.bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}' +
+      '.wash{position:absolute;inset:0;background:' + wash + '}' +
+      '.top{position:absolute;left:0;right:0;top:44px;text-align:center}' +
+      '.mark{width:150px;height:auto;display:block;margin:0 auto 10px}' +
+      '.script{font-family:GreatVibes,cursive;color:#fff;font-size:54px;line-height:1.2;margin:0;text-shadow:0 2px 14px rgba(120,40,60,.28)}' +
+      '@media(max-width:900px){.script{display:none}.mark{width:112px}}</style>' +
+      '<img class="bg" src="' + ROOT + 'img/sunset.jpg" alt=""><div class="wash"></div>' +
+      '<div class="top"><img class="mark" src="' + ROOT + 'img/mark.png" alt=""><p class="script">Southern California is calling.</p></div>';
+  });
 
   /* footer links (the canonical facts block stays native text beside it) */
   define('ac-footer-links', function () {

@@ -17,7 +17,7 @@ faq.html            25 Q&As + FAQPage JSON-LD (schema text must match visible te
 registration.html   How registration works — not open yet, hands off later
 contact.html        info@ac2027socal.com + facts sidecard
 host-parish.html    Saint Andrew facts (from saintandrew.net), Riverside-vs-Anaheim note
-wix/ac-elements.js  Wix custom elements: ac-header, ac-ratecard, ac-buttons, ac-footer-links. Design only; text stays native in Wix. ASCII-only
+wix/ac-elements.js  Wix custom elements: ac-header, ac-ratecard, ac-buttons, ac-hero-bg, ac-footer-links. Design only; text stays native in Wix. ASCII-only
 travel.html, things-to-do.html, media.html, legal pages, disneyland.html (unlisted)
 css/site.css        Every style. Shared by all pages.
 js/nav.js           Mobile Menu toggle (below 1100px)
