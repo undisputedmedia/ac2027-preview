@@ -100,15 +100,17 @@
      the H1, descriptor and note sit on top as native Wix text. Stretch it to the section.
      variant="band": photo with a navy scrim only (the home page's mid-page band).
      variant="gradient": the sunset gradient only (the home page's signup section). */
-  /* the element has no content height of its own; if the wrapper gives it none
-     (Wix editor preview iframe), fall back to the parent or viewport height */
+  /* the element has no content height of its own. In the Wix editor it renders inside its own
+     preview iframe, so fill that viewport (100vh) -- a px height would stop Wix shrinking it.
+     On the live page it fills its wrapper; if the wrapper gives no height, use the parent's. */
   HOOKS['ac-hero-bg'] = function (r) {
-    var h = r.host;
+    var h = r.host, framed = false;
+    try { framed = window.self !== window.top; } catch (e) { framed = true; }
+    if (framed) { h.style.height = '100vh'; return; }
     function fit() {
       h.style.height = '';
-      if (h.clientHeight < 10) {
-        var ph = h.parentElement ? h.parentElement.clientHeight : 0;
-        h.style.height = (ph > 10 ? ph : window.innerHeight) + 'px';
+      if (h.clientHeight < 10 && h.parentElement && h.parentElement.clientHeight > 10) {
+        h.style.height = h.parentElement.clientHeight + 'px';
       }
     }
     fit();
