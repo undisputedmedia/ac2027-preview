@@ -100,13 +100,15 @@
      the H1, descriptor and note sit on top as native Wix text. Stretch it to the section.
      variant="band": photo with a navy scrim only (the home page's mid-page band).
      variant="gradient": the sunset gradient only (the home page's signup section). */
-  /* the element has no content height of its own. In the Wix editor it renders inside its own
-     preview iframe, so fill that viewport (100vh) -- a px height would stop Wix shrinking it.
+  /* The element has no content height of its own. In the Wix editor it renders inside its own
+     preview iframe and Wix grows the element to fit the iframe's content, so there the host is
+     0px tall and the layers are position:fixed (they fill the iframe, i.e. the element's box).
      On the live page it fills its wrapper; if the wrapper gives no height, use the parent's. */
+  var FRAMED = false;
+  try { FRAMED = window.self !== window.top; } catch (e) { FRAMED = true; }
   HOOKS['ac-hero-bg'] = function (r) {
-    var h = r.host, framed = false;
-    try { framed = window.self !== window.top; } catch (e) { framed = true; }
-    if (framed) { h.style.height = '100vh'; return; }
+    var h = r.host;
+    if (FRAMED) return;
     function fit() {
       h.style.height = '';
       if (h.clientHeight < 10 && h.parentElement && h.parentElement.clientHeight > 10) {
@@ -117,19 +119,22 @@
     if (!h._acFit) { h._acFit = true; window.addEventListener('resize', fit); setTimeout(fit, 300); }
   };
   define('ac-hero-bg', function (el) {
-    var v = el.getAttribute('variant'), band = v === 'band' || v === 'gradient';
-    if (v === 'gradient') {
-      return '<style>:host{display:block;height:100%;min-height:100%;' +
-        'background:linear-gradient(180deg,#FDCE3E 0%,#FDA04D 34%,#FB5063 67%,#AB284A 100%)}</style>';
+    var v = el.getAttribute('variant'), band = v === 'band', grad = v === 'gradient';
+    var pos = FRAMED ? 'fixed' : 'absolute';
+    var host = FRAMED ? ':host{display:block;height:0;overflow:visible}' :
+      ':host{display:block;position:relative;overflow:hidden;height:100%;min-height:100%}';
+    var layer = '{position:' + pos + ';top:0;left:0;right:0;bottom:0;width:100%;height:100%}';
+    if (grad) {
+      return '<style>' + host + '.g' + layer + '.g{background:linear-gradient(180deg,#FDCE3E 0%,#FDA04D 34%,#FB5063 67%,#AB284A 100%)}</style><div class="g"></div>';
     }
     var wash = band ? 'linear-gradient(180deg,rgba(13,7,69,0) 30%,rgba(13,7,69,.72) 100%)' :
       'linear-gradient(180deg,rgba(253,236,226,.94) 0%,rgba(252,212,188,.80) 9%,rgba(251,199,168,.62) 18%,' +
       'rgba(250,190,152,.52) 28%,rgba(250,172,136,.54) 42%,rgba(244,133,105,.62) 58%,rgba(198,74,80,.74) 72%,' +
       'rgba(150,48,70,.86) 86%,rgba(125,38,65,.94) 100%)';
-    return '<style>:host{display:block;position:relative;overflow:hidden;height:100%;min-height:100%}' +
-      '.bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}' +
-      '.wash{position:absolute;inset:0;background:' + wash + '}' +
-      '.top{position:absolute;left:0;right:0;top:44px;text-align:center}' +
+    return '<style>' + host +
+      '.bg' + layer + '.bg{object-fit:cover}' +
+      '.wash' + layer + '.wash{background:' + wash + '}' +
+      '.top{position:' + pos + ';left:0;right:0;top:44px;text-align:center}' +
       '.mark{width:150px;height:auto;display:block;margin:0 auto 10px}' +
       '.script{font-family:GreatVibes,cursive;color:#fff;font-size:54px;line-height:1.2;margin:0;text-shadow:0 2px 14px rgba(120,40,60,.28)}' +
       '@media(max-width:900px){.script{display:none}.mark{width:112px}}</style>' +
