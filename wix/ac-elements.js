@@ -98,7 +98,8 @@
 
   /* hero background: photo, sunset wash, mark and script line. Decorative only:
      the H1, descriptor and note sit on top as native Wix text. Stretch it to the section.
-     variant="band": photo with a navy scrim only (the home page's mid-page band). */
+     variant="band": photo with a navy scrim only (the home page's mid-page band).
+     variant="gradient": the sunset gradient only (the home page's signup section). */
   /* the element has no content height of its own; if the wrapper gives it none
      (Wix editor preview iframe), fall back to the parent or viewport height */
   HOOKS['ac-hero-bg'] = function (r) {
@@ -114,7 +115,11 @@
     if (!h._acFit) { h._acFit = true; window.addEventListener('resize', fit); setTimeout(fit, 300); }
   };
   define('ac-hero-bg', function (el) {
-    var band = el.getAttribute('variant') === 'band';
+    var v = el.getAttribute('variant'), band = v === 'band' || v === 'gradient';
+    if (v === 'gradient') {
+      return '<style>:host{display:block;height:100%;min-height:100%;' +
+        'background:linear-gradient(180deg,#FDCE3E 0%,#FDA04D 34%,#FB5063 67%,#AB284A 100%)}</style>';
+    }
     var wash = band ? 'linear-gradient(180deg,rgba(13,7,69,0) 30%,rgba(13,7,69,.72) 100%)' :
       'linear-gradient(180deg,rgba(253,236,226,.94) 0%,rgba(252,212,188,.80) 9%,rgba(251,199,168,.62) 18%,' +
       'rgba(250,190,152,.52) 28%,rgba(250,172,136,.54) 42%,rgba(244,133,105,.62) 58%,rgba(198,74,80,.74) 72%,' +
