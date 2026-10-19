@@ -1,0 +1,27 @@
+/* Mirror of the Wix desktop build (980px grid, exact element positions).
+   Generated from the Wix editor by tools in the AC2027 project; do not hand-edit pages. */
+@font-face{font-family:'Oswald';font-weight:300;font-display:swap;src:url(../fonts/Oswald-300.woff2) format('woff2')}
+@font-face{font-family:'Oswald';font-weight:400;font-display:swap;src:url(../fonts/Oswald-400.woff2) format('woff2')}
+@font-face{font-family:'Oswald';font-weight:500;font-display:swap;src:url(../fonts/Oswald-500.woff2) format('woff2')}
+@font-face{font-family:'Oswald';font-weight:600;font-display:swap;src:url(../fonts/Oswald-600.woff2) format('woff2')}
+@font-face{font-family:'Poppins';font-weight:300;font-display:swap;src:url(../fonts/Poppins-300.woff2) format('woff2')}
+@font-face{font-family:'Poppins';font-weight:400;font-display:swap;src:url(../fonts/Poppins-400.woff2) format('woff2')}
+@font-face{font-family:'Poppins';font-weight:500;font-display:swap;src:url(../fonts/Poppins-500.woff2) format('woff2')}
+@font-face{font-family:'Poppins';font-weight:600;font-display:swap;src:url(../fonts/Poppins-600.woff2) format('woff2')}
+@font-face{font-family:'GreatVibes';font-weight:400;font-display:swap;src:url(../fonts/GreatVibes-400.woff2) format('woff2')}
+html,body{margin:0;padding:0}
+body{background:#faf8f5;color:#0d0745;font-family:'Poppins',Arial,sans-serif;min-width:980px;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+main{display:block}
+section{position:relative;width:100%;overflow:visible}
+.grid{position:relative;width:980px;height:100%;margin:0 auto}
+.abs{position:absolute;display:block;box-sizing:border-box}
+.txt p,.txt h1,.txt h2,.txt h3,.txt h4,.txt h5,.txt h6{margin:0;font-weight:inherit}
+.txt a:hover{opacity:.8}
+.acform{position:absolute;box-sizing:border-box;background:#fff;padding:22px 14px 22px;font-family:'Poppins',sans-serif;color:#0d0745}
+.acform label{display:block;font-size:14px;margin:0 0 14px}
+.acform input[type=text],.acform input[type=email]{display:block;width:100%;box-sizing:border-box;margin-top:6px;height:34px;border:0;border-bottom:1.5px solid #0d0745;border-radius:0;padding:0 6px;font:14px 'Poppins',sans-serif;background:transparent;color:#0d0745}
+.acform input::placeholder{color:#6b6890}
+.acform .row{display:flex;gap:12px;align-items:flex-end}.acform .row label{flex:1;margin-bottom:0}
+.acform button{height:42px;width:190px;background:#0d0745;color:#faf8f5;border:0;font:400 15px 'Poppins',sans-serif;cursor:pointer;white-space:nowrap}
+.acform .chk{display:flex;gap:12px;align-items:flex-start;margin:20px 0 0;font-size:15px;line-height:1.55}.acform .chk input{margin-top:5px;width:16px;height:16px;accent-color:#0d0745}
+.mirror-badge{position:fixed;left:12px;bottom:12px;z-index:99;font:500 11px/1 'Oswald',sans-serif;letter-spacing:.12em;text-transform:uppercase;background:rgba(13,7,69,.86);color:#faf8f5;padding:8px 12px;border-radius:999px;pointer-events:none}

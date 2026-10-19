@@ -8,7 +8,7 @@ Live: https://undisputedmedia.github.io/ac2027-preview/
 ## Layout
 
 ```
-index.html          Home — hero, facts, hotel, invitation, week, travel, signup
+index.html          Home (mirror of Wix NEW Home — see "Mirror pages" below)
 about.html          What is the Convention — Q&A, host parish, venue
 schedule.html       Week structure (program NOT confirmed)
 sponsorships.html   Tiers, event sponsorships, Legacy Journal rates
@@ -28,6 +28,27 @@ img/sunset.jpg      Hero photograph
 
 Edit the HTML directly. Edit `css/site.css` for anything visual.
 Do not inline styles into pages — they share one sheet on purpose.
+
+
+## Mirror pages — the preview now matches the Wix build (Oct 17, 2026)
+
+These pages are **generated from the Wix editor**, not hand-edited:
+`index.html, hotel.html, registration.html, schedule.html, faq.html, contact.html,
+host-parish.html, journal.html, get-notified.html` + `css/mirror.css` + `js/mirror.js`.
+
+- Each Wix section is a full-width band; every text box and element sits at its exact Wix
+  desktop position inside a 980px grid. Text, links, titles and meta descriptions are copied
+  from Wix. Header, hero, buttons, rate card, journal samples and footer links are the same
+  custom elements Wix uses (`wix/ac-elements.js`), so they are identical by construction.
+- Links: NEW pages point at each other here. Pages Wix keeps from the old site
+  (About, Sponsorships, Vendors, Volunteer) open the live ac2027socal.com page.
+- Desktop only, like the Wix build (mobile layouts aren't built yet). The form is a static
+  look-alike; it doesn't submit.
+- To refresh after Wix changes: rerun the extractor in `tools/wix-mirror/` (see its README),
+  then `python3 render.py` and copy `out/` here. Don't hand-edit the mirror pages — the next
+  sync overwrites them. Edit Wix instead.
+- `about.html, travel.html, things-to-do.html, media.html, sponsorships.html` and the legal
+  pages are the older design proposals. Nothing links to them any more.
 
 ---
 

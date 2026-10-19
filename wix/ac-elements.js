@@ -2,7 +2,7 @@
    Text that crawlers must read lives in native Wix text, not here.
    Wix: Add > Embed Code > Custom Element > Server URL =
    https://undisputedmedia.github.io/ac2027-preview/wix/ac-elements.js
-   Tags: ac-header, ac-ratecard, ac-buttons, ac-hero-bg, ac-footer-links
+   Tags: ac-header, ac-ratecard, ac-buttons, ac-hero-bg, ac-footer-links, ac-journal-samples
    Keep this file ASCII-only (use \u escapes) so it renders the same under any charset. */
 (function () {
   var ROOT = 'https://undisputedmedia.github.io/ac2027-preview/';
@@ -23,6 +23,28 @@
     '.btn:hover{filter:brightness(.95)}';
   var HOOKS = {};
   function esc(t) { return String(t).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  /* Click tracking. Links live inside shadow DOM, where GA4 enhanced measurement,
+     GTM link triggers and Meta's Event Setup Tool cannot see them, so the
+     elements report their own outbound clicks. Distinct event names, so nothing
+     double-counts if a tag ever does see through the shadow root:
+       hotel_block_click  -> book.passkey.com            (GA4 key event; Meta HotelBlockClick)
+       chms_form_click    -> *.churchofficechms.com      (sponsor, journal, volunteer, donate)
+       registration_click -> REG_HOST, once registration opens
+       outbound_link      -> any other external link (social etc.)
+     Every click is also pushed to dataLayer as event "ac_link_click" for GTM. */
+  var REG_HOST = '';
+  function track(a, el) {
+    var u; try { u = new URL(a.href, location.href); } catch (e) { return; }
+    if (!/^https?:$/.test(u.protocol) || u.hostname === location.hostname) return;
+    var h = u.hostname, ev = /(^|\.)passkey\.com$/.test(h) ? 'hotel_block_click'
+      : /(^|\.)churchofficechms\.com$/.test(h) ? 'chms_form_click'
+      : (REG_HOST && h === REG_HOST) ? 'registration_click' : 'outbound_link';
+    var p = { link_url: u.origin + u.pathname, link_domain: h, link_text: (a.textContent || '').replace(/\s+/g, ' ').trim().slice(0, 100),
+      ac_element: el, page_path: location.pathname, transport_type: 'beacon' };
+    try { if (typeof window.gtag === 'function') window.gtag('event', ev, p); } catch (e) {}
+    try { if (typeof window.fbq === 'function' && ev === 'hotel_block_click') window.fbq('trackCustom', 'HotelBlockClick', { page_path: p.page_path }); } catch (e) {}
+    try { (window.dataLayer = window.dataLayer || []).push({ event: 'ac_link_click', ac_event: ev, link_url: p.link_url, link_domain: h, link_text: p.link_text, ac_element: el }); } catch (e) {}
+  }
   function define(name, render, attrs) {
     if (customElements.get(name)) return;
     customElements.define(name, class extends HTMLElement {
@@ -32,13 +54,20 @@
       draw() {
         var r = this.shadowRoot || this.attachShadow({ mode: 'open' });
         r.innerHTML = render(this);
+        if (!r._acTrack) {
+          r._acTrack = true;
+          r.addEventListener('click', function (e) {
+            var a = e.target && e.target.closest ? e.target.closest('a[href]') : null;
+            if (a) track(a, name);
+          });
+        }
         if (HOOKS[name]) HOOKS[name](r);
       }
     });
   }
 
   /* header: logo, nav, Book Room. attribute current="/hotel" */
-  var NAV = [['/', 'Home'], ['/about', 'About'], ['/hotel', 'Hotel'], ['/registration', 'Registration'], ['/faq', 'FAQ'], ['/contact', 'Contact']];
+  var NAV = [['/', 'Home'], ['/about', 'About'], ['/hotel', 'Hotel'], ['/registration', 'Registration'], ['/sponsorships', 'Sponsors'], ['/faq', 'FAQ'], ['/contact', 'Contact']];
   HOOKS['ac-header'] = function (r) {
     var b = r.querySelector('.tog'), bar = r.querySelector('.bar');
     b.addEventListener('click', function () {
@@ -96,6 +125,56 @@
       '@media(max-width:600px){.btn{width:100%}}</style><div class="row">' + html + '</div>';
   }, ['items', 'styles', 'align']);
 
+  /* journal samples: three to-scale mock journal pages (7.5 x 10 in) showing every ad size.
+     Decorative/illustrative only; the rate card stays native Wix text. */
+  define('ac-journal-samples', function () {
+    var CROSS = '<svg viewBox="0 0 20 32" width="1em" height="1.6em" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M10 2v28M6 7h8M3 13h14M6 23l8-3"/></svg>', RQ = '\u2033', X = '\u00d7';
+    var LINE = '<span class="ln"></span>';
+    function cap(t, s, p) { return '<figcaption><b>' + t + '</b><span>' + s + '</span><em>' + p + '</em></figcaption>'; }
+    var full = '<div class="pg"><div class="ad full"><div class="frame">' +
+      '<div class="cr">' + CROSS + '</div><div class="k">In loving memory</div>' +
+      '<div class="nm">Name of your loved one</div><div class="yr">Dates</div>' +
+      '<div class="me">Memory Eternal</div>' + LINE + '<div class="fr">With love, the family</div>' +
+      '</div></div></div>';
+    var mixed = '<div class="pg mix">' +
+      '<div class="ad half"><div class="biz"><div class="k">Your business</div><div class="nm s">Business Name</div>' +
+      '<div class="tg">A short line about what you do</div><div class="ct">phone ' + MIDDOT + ' website ' + MIDDOT + ' city</div></div><i>Half page</i></div>' +
+      '<div class="bot"><div class="ad qtr"><div class="par"><div class="cr s">' + CROSS + '</div><div class="k">Greetings from</div>' +
+      '<div class="nm s">Your Parish</div><div class="tg">City, State</div></div><i>Quarter</i></div>' +
+      '<div class="rc"><div class="ad eig"><div class="k">Congratulations</div><div class="tg">to a graduate, a couple, a milestone</div><i>Eighth</i></div>' +
+      '<div class="cards"><div class="ad bc">Card</div><div class="ad bc">Card</div><div class="ad bc">Card</div><div class="ad bc">Card</div></div>' +
+      '</div></div></div>';
+    var rows = ''; for (var i = 0; i < 14; i++) { rows += '<div class="nl">' + (i % 3 === 0 ? 'In honor of' : (i % 3 === 1 ? 'In memory of' : 'The family of')) + ' ' + LINE + '</div>'; }
+    var names = '<div class="pg"><div class="ad lst"><div class="k c">Name listings</div><div class="cols">' + rows + rows + '</div></div></div>';
+    return '<style>' + BASE +
+      '.g{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;align-items:start}' +
+      'figure{margin:0}.pg{aspect-ratio:3/4;background:#fff;border-radius:4px;box-shadow:0 18px 40px -22px rgba(13,7,69,.45),0 0 0 1px rgba(13,7,69,.08);padding:7%;display:flex;flex-direction:column}' +
+      '.ad{position:relative;border:1.5px dashed rgba(144,41,79,.45);border-radius:3px;display:flex;align-items:center;justify-content:center;text-align:center;overflow:hidden}' +
+      '.ad i{position:absolute;right:5px;bottom:3px;font-style:normal;font-family:Oswald,sans-serif;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:' + MAROON + ';opacity:.75}' +
+      '.full{flex:1;border:none;background:' + NAVY + '}.frame{position:absolute;inset:6%;border:1px solid ' + GOLD + ';display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;color:' + SHORE + '}' +
+      '.cr{font-size:18px;color:' + GOLD + ';line-height:1}.cr.s{font-size:12px;color:' + MAROON + '}' +
+      '.k{font-family:Oswald,sans-serif;font-size:10px;letter-spacing:.2em;text-transform:uppercase}.full .k{color:' + GOLD + '}.k.c{color:' + MAROON + ';margin-bottom:8px}' +
+      '.nm{font-family:GreatVibes,cursive;font-size:30px;line-height:1.1}.nm.s{font-size:20px;color:' + NAVY + '}' +
+      '.yr{font-size:10px;letter-spacing:.1em;opacity:.7}.me{font-family:Oswald,sans-serif;font-size:13px;letter-spacing:.14em;text-transform:uppercase;margin-top:10px}' +
+      '.ln{display:inline-block;width:40%;height:1px;background:currentColor;opacity:.35;vertical-align:middle}.full .ln{width:30%;margin:4px 0}' +
+      '.fr{font-size:10px;opacity:.8}.tg{font-size:9px;color:rgba(13,7,69,.6);line-height:1.35;padding:0 6px}.ct{font-size:8px;letter-spacing:.06em;color:rgba(13,7,69,.5);margin-top:4px}' +
+      '.mix{gap:4%}.half{flex:1;background:' + SHORE + '}.biz,.par{display:flex;flex-direction:column;align-items:center;gap:3px}.half .k,.qtr .k,.eig .k{color:' + MAROON + '}' +
+      '.bot{flex:1;display:grid;grid-template-columns:1fr 1fr;gap:4%}.qtr{background:' + SHORE + '}.rc{display:grid;grid-template-rows:1fr 1fr;gap:6%}' +
+      '.eig{flex-direction:column;gap:3px;background:' + SHORE + '}.cards{display:grid;grid-template-columns:1fr 1fr;gap:5%}' +
+      '.bc{font-family:Oswald,sans-serif;font-size:8px;letter-spacing:.12em;text-transform:uppercase;color:' + MAROON + ';background:' + SHORE + '}' +
+      '.lst{flex:1;flex-direction:column;justify-content:flex-start;padding:7% 6%;border-style:solid;border-color:rgba(13,7,69,.1)}' +
+      '.cols{columns:2;column-gap:10%;width:100%;text-align:left}.nl{font-size:8.5px;color:rgba(13,7,69,.65);padding:3px 0;white-space:nowrap;overflow:hidden}.nl .ln{width:45%}' +
+      'figcaption{margin-top:16px;display:flex;flex-direction:column;gap:2px}figcaption b{font-family:Oswald,sans-serif;font-weight:500;font-size:15px;letter-spacing:.06em;text-transform:uppercase}' +
+      'figcaption span{font-size:13px;color:rgba(13,7,69,.6)}figcaption em{font-style:normal;font-size:13px;color:' + MAROON + ';font-weight:500}' +
+      '.note{grid-column:1/-1;font-size:12px;color:rgba(13,7,69,.55);text-align:center;margin-top:4px}' +
+      '@media(max-width:760px){.g{grid-template-columns:1fr;max-width:360px;margin:0 auto}}</style>' +
+      '<div class="g">' +
+      '<figure>' + full + cap('Full page', 'Color or greyscale, 7.5' + RQ + ' ' + X + ' 10' + RQ, 'From $350') + '</figure>' +
+      '<figure>' + mixed + cap('Partial pages', 'Half, quarter, eighth and business card', 'From $150') + '</figure>' +
+      '<figure>' + names + cap('Name listing', 'Your name in the journal, no artwork needed', '$100') + '</figure>' +
+      '<p class="note">Sample layouts, drawn to proportion. Names and businesses shown are placeholders.</p></div>';
+  });
+
   /* hero background: photo, sunset wash, mark and script line. Decorative only:
      the H1, descriptor and note sit on top as native Wix text. Stretch it to the section.
      variant="band": photo with a navy scrim only (the home page's mid-page band).
@@ -146,6 +225,8 @@
   define('ac-footer-links', function () {
     var pages = [['/', 'Home'], ['/about', 'About the Convention'], ['/hotel', 'Hotel &amp; Room Block'], ['/registration', 'Registration'],
       ['/schedule', 'Schedule'], ['/faq', 'FAQ'], ['/host-parish', 'Host Parish'], ['/contact', 'Contact']];
+    var involved = [['/sponsorships', 'Sponsorships'], ['/journal', 'Legacy Journal'], ['/vendors', 'Vendors'], ['/volunteer', 'Volunteer'],
+      ['https://saintandrew.churchofficechms.com/external/form/fceb608b-be91-4ab0-9638-38cae4ff47f7', 'Support the Convention']];
     var social = [['https://instagram.com/ac2027socal', 'Instagram'], ['https://facebook.com/ac2027socal', 'Facebook'], ['https://youtube.com/@ac2027socal', 'YouTube'], ['https://x.com/ac2027socal', 'X'], ['https://www.tiktok.com/@ac2027socal', 'TikTok']];
     function col(t, list) {
       return '<div><h4>' + t + '</h4><ul>' + list.map(function (l) { return '<li><a href="' + l[0] + '">' + l[1] + '</a></li>'; }).join('') + '</ul></div>';
@@ -154,7 +235,8 @@
       'h4{font-family:Oswald,sans-serif;font-weight:500;font-size:13px;letter-spacing:.2em;text-transform:uppercase;color:' + GOLD + ';margin:0 0 16px}' +
       'ul{list-style:none;padding:0;margin:0}li{margin-bottom:10px;font-size:14px}' +
       'a{color:rgba(250,248,245,.86);text-decoration:none}a:hover{color:' + GOLD + '}' +
+      '.c2>div+div{margin-top:26px}' +
       '@media(max-width:400px){.g{grid-template-columns:1fr}}</style>' +
-      '<div class="g">' + col('Pages', pages) + col('Follow Us', social) + '</div>';
+      '<div class="g">' + col('Pages', pages) + '<div class="c2">' + col('Get Involved', involved) + col('Follow Us', social) + '</div></div>';
   });
 })();
