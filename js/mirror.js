@@ -6,7 +6,7 @@
     '/': 'index.html', '/hotel': 'hotel.html', '/registration': 'registration.html', '/schedule': 'schedule.html',
     '/faq': 'faq.html', '/contact': 'contact.html', '/host-parish': 'host-parish.html', '/journal': 'journal.html',
     '/get-notified': 'get-notified.html',
-    '/about': LIVE + 'copy-of-about', '/sponsorships': LIVE + 'copy-of-events-1',
+    '/about': 'about.html', '/sponsorships': 'sponsorships.html',
     '/vendors': LIVE + 'copy-of-journal-sponsorships', '/volunteer': LIVE + 'volunteer'
   };
   function fix(root) {
