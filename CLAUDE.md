@@ -1,3 +1,7 @@
+> **Auto-deploy allowed.** Before every push: run a build/lint check if available; after deploy, confirm the live site loads. Log each deploy in structure.md.
+>
+> (structure.md = Google Drive `Work/_System/structure.md`, section "Deploy log".)
+
 # AC2027 SoCal — site preview
 
 Static site for the 58th Biennial Antiochian Archdiocese Convention.
