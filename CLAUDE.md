@@ -22,7 +22,7 @@ registration.html   How registration works — not open yet, hands off later
 contact.html        info@ac2027socal.com + facts sidecard
 host-parish.html    Saint Andrew facts (from saintandrew.net), Riverside-vs-Anaheim note
 wix/ac-elements.js  Wix custom elements: ac-header, ac-ratecard, ac-buttons, ac-hero-bg, ac-footer-links. Design only; text stays native in Wix. ASCII-only
-travel.html, things-to-do.html, media.html, legal pages, disneyland.html (unlisted)
+travel.html, things-to-do.html, media.html, legal pages (older design proposals, unlinked)
 css/site.css        Every style. Shared by all pages.
 js/nav.js           Mobile Menu toggle (below 1100px)
 fonts/              Oswald 300/400/500/600, Poppins 300/400/500/600, Great Vibes 400
@@ -38,17 +38,16 @@ Do not inline styles into pages — they share one sheet on purpose.
 
 These pages are **generated from the Wix editor**, not hand-edited:
 `index.html, about.html, hotel.html, registration.html, schedule.html, faq.html, contact.html,
-host-parish.html, sponsorships.html, journal.html, get-notified.html` + `css/mirror.css` + `js/mirror.js`.
+host-parish.html, sponsorships.html, journal.html, vendors.html, volunteer.html, get-notified.html` + `css/mirror.css` + `js/mirror.js`.
 
 - Each Wix section is a full-width band; every text box and element sits at its exact Wix
   desktop position inside a 980px grid. Text, links, titles and meta descriptions are copied
   from Wix. Header, hero, buttons, rate card, journal samples and footer links are the same
   custom elements Wix uses (`wix/ac-elements.js`), so they are identical by construction.
-- Links: NEW pages point at each other here. Pages Wix keeps from the old site
-  (Vendors, Volunteer) open the live ac2027socal.com page.
+- Links: every page in the new nav, footer and buttons is mirrored here.
 - Desktop only, like the Wix build (mobile layouts aren't built yet). The form is a static
   look-alike; it doesn't submit.
-- To refresh after Wix changes: rerun the extractor in `tools/wix-mirror/` (see its README),
+- To refresh after Wix changes: rerun the extractor in `~/Code/ac2027-tools/wix-mirror/` (see its README),
   then `python3 render.py` and copy `out/` here. Don't hand-edit the mirror pages — the next
   sync overwrites them. Edit Wix instead.
 - `travel.html, things-to-do.html, media.html` and the legal pages are the older design

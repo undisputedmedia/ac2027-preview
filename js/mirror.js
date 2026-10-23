@@ -7,7 +7,7 @@
     '/faq': 'faq.html', '/contact': 'contact.html', '/host-parish': 'host-parish.html', '/journal': 'journal.html',
     '/get-notified': 'get-notified.html',
     '/about': 'about.html', '/sponsorships': 'sponsorships.html',
-    '/vendors': LIVE + 'copy-of-journal-sponsorships', '/volunteer': LIVE + 'volunteer'
+    '/vendors': 'vendors.html', '/volunteer': 'volunteer.html'
   };
   function fix(root) {
     root.querySelectorAll('a[href]').forEach(function (a) {
