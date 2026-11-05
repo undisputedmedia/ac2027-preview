@@ -89,6 +89,7 @@
       'nav a:hover,nav a.cur{border-bottom-color:' + MAROON + '}.cta{font-size:13px;padding:10px 20px;white-space:nowrap}' +
       '.tog{display:none;margin-left:auto;font-family:Oswald,sans-serif;font-size:13px;letter-spacing:.09em;text-transform:uppercase;background:none;border:1px solid rgba(13,7,69,.28);color:' + NAVY + ';padding:9px 16px;border-radius:999px;cursor:pointer}' +
       '@media(max-width:900px){nav{display:none}.tog{display:block}.l2{display:none}.cta{font-size:11px;padding:9px 14px}' +
+      '@media(max-width:420px){.bt{display:none}.bar{gap:12px}.mark{height:48px}}' +
       '.open nav{display:flex;flex-direction:column;gap:0;position:fixed;left:0;right:0;top:76px;background:' + SHORE + ';padding:6px 22px 14px;border-bottom:1px solid rgba(13,7,69,.13);box-shadow:0 18px 30px -22px rgba(13,7,69,.4);z-index:50}' +
       '.open nav a{padding:13px 0;border-bottom:1px solid rgba(13,7,69,.13)}}</style>' +
       '<div class="bar"><a href="/"><img class="mark" src="' + ROOT + 'img/mark.png" alt="58th Biennial Antiochian Archdiocese Convention ' + MDASH + ' SoCal"></a>' +
@@ -293,6 +294,7 @@
       'button{all:unset;box-sizing:border-box;width:100%;display:flex;justify-content:space-between;gap:10px;padding:7px 10px;border-radius:8px;font-size:13px;cursor:pointer;color:' + NAVY + '}' +
       'button:hover{background:rgba(13,7,69,.05)}button.sel{background:' + NAVY + ';color:' + SHORE + '}button span{flex:1}button b{font-weight:500;white-space:nowrap}button:focus-visible{outline:2px solid ' + MAROON + '}' +
       '@media(max-width:860px){.wrap{grid-template-columns:1fr}.stagebox{overflow:hidden}.spread,.covers{transform:scale(.72);transform-origin:top center;margin-bottom:-110px}}' +
+      '@media(max-width:420px){.stagebox{padding:24px 10px 18px}.spread,.covers{transform:scale(.5);margin-bottom:-175px}.covers{gap:20px}.cap{margin-top:30px;font-size:12px}.list{max-height:none}}' +
       '</style><div class="wrap"><div class="stagebox">' + stage + '<p class="cap">' + caption + '</p></div>' +
       '<div class="panel"><p class="sel-name">' + cur[1] + '</p><p class="price">' + money(cur[2]) + '</p><p class="spec">' + spec + '</p>' +
       '<a class="btn navy" href="' + JOURNAL_FORM + '">Reserve This Placement</a><a class="mail" href="mailto:info@ac2027socal.com">Questions? info@ac2027socal.com</a>' +
