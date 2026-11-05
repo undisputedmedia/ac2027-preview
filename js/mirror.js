@@ -7,7 +7,10 @@
     '/faq': 'faq.html', '/contact': 'contact.html', '/host-parish': 'host-parish.html', '/journal': 'journal.html',
     '/get-notified': 'get-notified.html',
     '/about': 'about.html', '/sponsorships': 'sponsorships.html',
-    '/vendors': 'vendors.html', '/volunteer': 'volunteer.html'
+    '/vendors': 'vendors.html', '/volunteer': 'volunteer.html',
+    '/guides': 'guides.html', '/first-timers-guide': 'first-timers-guide.html', '/travel': 'travel.html', '/anaheim': 'anaheim.html',
+    '/riverside': 'riverside.html', '/convention-history': 'convention-history.html', '/antiochian-orthodox': 'antiochian-orthodox.html',
+    '/privacy-policy': 'privacy.html'
   };
   function fix(root) {
     root.querySelectorAll('a[href]').forEach(function (a) {
@@ -33,7 +36,7 @@
     });
   }
   if (window.customElements && customElements.whenDefined) {
-    ['ac-header', 'ac-buttons', 'ac-ratecard', 'ac-footer-links'].forEach(function (t) { customElements.whenDefined(t).then(scan); });
+    ['ac-header', 'ac-buttons', 'ac-ratecard', 'ac-footer-links', 'ac-journal-book'].forEach(function (t) { customElements.whenDefined(t).then(scan); });
   }
   window.addEventListener('load', scan);
   setTimeout(scan, 600);
