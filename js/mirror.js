@@ -41,3 +41,20 @@
   window.addEventListener('load', scan);
   setTimeout(scan, 600);
 })();
+
+/* Entrance motion, matching the Wix build: text blocks and design pieces float in as they scroll into view. */
+(function () {
+  if (!('IntersectionObserver' in window)) return;
+  var skip = /^(AC-HEADER|AC-HERO-BG|AC-FOOTER-LINKS)$/;
+  var io = new IntersectionObserver(function (es) {
+    es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('main > section').forEach(function (s) {
+    if (s.querySelector('ac-footer-links')) return;
+    var els = [].slice.call(s.querySelectorAll(':scope > .grid > .abs')).filter(function (el) {
+      return !skip.test(el.tagName) && (el.classList.contains('txt') || /^AC-/.test(el.tagName));
+    });
+    els.sort(function (a, b) { return (a.offsetTop - b.offsetTop) || (a.offsetLeft - b.offsetLeft); });
+    els.forEach(function (el, i) { el.classList.add('ac-anim'); el.style.transitionDelay = Math.min(i * 120, 480) + 'ms'; io.observe(el); });
+  });
+})();

@@ -20,7 +20,8 @@
     '.btn{display:inline-block;font-family:Oswald,sans-serif;font-weight:500;font-size:15px;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;padding:16px 34px;border-radius:999px;line-height:1.2;text-align:center}' +
     '.navy{background:' + NAVY + ';color:' + SHORE + '}.gold{background:' + GOLD + ';color:' + NAVY + '}' +
     '.outline{color:' + NAVY + ';box-shadow:inset 0 0 0 1.5px rgba(13,7,69,.28)}.outline-w{color:#fff;box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.6)}.white{background:#fff;color:' + NAVY + ';box-shadow:0 10px 15px -3px rgba(0,0,0,.12)}' +
-    '.btn:hover{filter:brightness(.95)}';
+    '.btn{transition:transform .2s ease,box-shadow .2s ease,filter .2s ease}.btn:hover{filter:brightness(.95);transform:translateY(-2px)}' +
+    '@media(prefers-reduced-motion:reduce){.btn{transition:none}.btn:hover{transform:none}}';
   var HOOKS = {};
   function esc(t) { return String(t).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
   /* Click tracking. Links live inside shadow DOM, where GA4 enhanced measurement,
@@ -337,7 +338,9 @@
       'rgba(250,190,152,.52) 28%,rgba(250,172,136,.54) 42%,rgba(244,133,105,.62) 58%,rgba(198,74,80,.74) 72%,' +
       'rgba(150,48,70,.86) 86%,rgba(125,38,65,.94) 100%)';
     return '<style>' + host +
-      '.bg' + layer + '.bg{object-fit:cover}' +
+      '.bg' + layer + '.bg{object-fit:cover;animation:acKen 24s ease-out both}@keyframes acKen{from{transform:scale(1.08)}to{transform:scale(1)}}' +
+      '.mark{animation:acRise 1.1s .2s cubic-bezier(.22,.61,.36,1) both}.script{animation:acRise 1.1s .45s cubic-bezier(.22,.61,.36,1) both}@keyframes acRise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}' +
+      '@media(prefers-reduced-motion:reduce){.bg,.mark,.script{animation:none}}' +
       '.wash' + layer + '.wash{background:' + wash + '}' +
       '.top{position:' + pos + ';left:0;right:0;top:44px;text-align:center}' +
       '.mark{width:150px;height:auto;display:block;margin:0 auto 10px}' +
