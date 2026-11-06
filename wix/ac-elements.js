@@ -115,10 +115,10 @@
      Once the header scrolls away the bar pins to the top of the screen.
      Edit NEWS to change the announcements on every page at once. */
   var NEWS = [
-    ['Hotel rooms are open at $209 a night', 'Book now', PASSKEY],
+    ['Hotel room block is open', 'Book now', PASSKEY],
     ['Registration opens soon', 'Get notified', '/get-notified'],
-    ['Sponsorships and Legacy Journal pages are open', 'See options', '/sponsorships'],
-    ['Volunteers needed on 14 teams', 'Sign up', '/volunteer']
+    ['Sponsorships are open', 'See options', '/sponsorships'],
+    ['Volunteers needed', 'Sign up', '/volunteer']
   ];
   HOOKS['ac-newsbar'] = function (r) {
     var host = r.host, bar = r.querySelector('.bar'), items = r.querySelectorAll('.it'), i = 0, paused = false;
