@@ -2,7 +2,7 @@
    Text that crawlers must read lives in native Wix text, not here.
    Wix: Add > Embed Code > Custom Element > Server URL =
    https://undisputedmedia.github.io/ac2027-preview/wix/ac-elements.js
-   Tags: ac-header, ac-ratecard, ac-buttons, ac-hero-bg, ac-footer-links, ac-journal-samples, ac-journal-book
+   Tags: ac-header, ac-ratecard, ac-buttons, ac-hero-bg, ac-footer-links, ac-journal-samples, ac-journal-book, ac-schedule
    Keep this file ASCII-only (use \u escapes) so it renders the same under any charset. */
 (function () {
   var ROOT = 'https://undisputedmedia.github.io/ac2027-preview/';
@@ -370,4 +370,68 @@
       '@media(max-width:400px){.g{grid-template-columns:1fr}}</style>' +
       '<div class="g"><div class="c2">' + col('Pages', pages) + col('Follow Us', social) + '</div><div class="c2">' + col('Plan Your Trip', trip) + col('Get Involved', involved) + '</div></div>';
   });
+
+  /* schedule: the day-by-day program, one tab per day (data from the 2026 schedule embed;
+     the old embed's "Sun 7/26" is corrected to Sunday, July 25). attribute day="0".."6" */
+  var SCHED = [{"d":"19","n":"Monday","s":"Arrival Day \u2014 Convention Opens","x":[["Afternoon",[["12:00 \u2013 2:00 pm","VIP Luncheon (by invitation)"],["3:00 \u2013 9:00 pm","Hospitality Center"],["3:00 \u2013 9:00 pm","Registration Open"],["4:00 \u2013 5:00 pm","Choir Rehearsal"],["4:00 \u2013 5:00 pm","Byzantine Choir Rehearsal"],["4:45 \u2013 5:00 pm","Blessing of the Chapel"],["5:00 \u2013 6:00 pm","Vespers"]]],["Evening",[["6:00 \u2013 6:30 pm","Shrine Visitation \u2014 The Miraculous Kursk Root Icon"],["6:00 \u2013 8:00 pm","Game Show Night"],["8:00 \u2013 11:00 pm","Diocesan Teen SOYO Officers Meeting"],["9:00 \u2013 10:30 pm","VIP Club (by invitation)"],["11:00 \u2013 11:30 pm","Compline"],["11:30 pm \u2013 12:00 am","\u201cAsk Abouna\u201d"]]]]},{"d":"20","n":"Tuesday","s":"Department Meetings & Clergy Day","x":[["Morning",[["8:00 \u2013 8:45 am","Bible Study and Confessions"],["8:45 \u2013 10:00 am","Daily Orthros"],["10:00 am \u2013 9:00 pm","Hospitality Center \u00b7 Registration \u00b7 Exhibits & Vendors"],["10:00 am \u2013 4:30 pm","Mother's Room Open \u00b7 Kidz Club (Ages 4\u201312)"],["10:00 \u2013 11:00 am","Shrine Visitation \u2014 Kursk Root Icon"],["10:00 \u2013 11:00 am","Clergy / Clergy Wives Breakfast"],["11:00 am \u2013 1:00 pm","Clergy Wives Meeting"],["11:00 am \u2013 2:00 pm","Clergy Meeting with Hierarchs"],["11:00 am \u2013 2:00 pm","Order of Saint Ignatius General Assembly"],["11:00 am \u2013 4:30 pm","Diocesan Teen SOYO Officers Meeting"]]],["Afternoon",[["2:00 \u2013 4:00 pm","Orthodox Leadership Initiative Meeting"],["2:00 \u2013 4:30 pm","Dept. of Liturgics \u00b7 Dept. of Western Rite \u00b7 Dept. of Theological & Pastoral Education \u00b7 Dept. of Finance \u00b7 Home Schooling Dept. \u00b7 Dept. of Orthodox Family Center"],["2:00 \u2013 4:30 pm","Workshops (2 sessions)"],["2:00 \u2013 5:00 pm","Choir Workshop / Rehearsal \u00b7 Byzantine Choir Rehearsal"]]],["Evening",[["5:00 \u2013 6:00 pm","Vespers"],["6:30 \u2013 10:00 pm","Kidz Club Evening Edition (Ages 4\u201312)"],["7:00 \u2013 9:30 pm","Tacos & Teens (Ticketed)"],["7:00 \u2013 9:30 pm","Order of Saint Ignatius Reception and Dinner"],["9:30 \u2013 10:30 pm","VIP Club (by invitation)"],["11:00 \u2013 11:30 pm","Compline"],["11:30 pm \u2013 12:00 am","\u201cAsk Abouna\u201d"]]]]},{"d":"21","n":"Wednesday","s":"Women's Day & Bible Bowl","x":[["Morning",[["8:00 \u2013 8:45 am","Bible Study and Confessions"],["8:45 \u2013 10:00 am","Daily Orthros"],["10:00 am \u2013 9:00 pm","Hospitality Center \u00b7 Registration \u00b7 Exhibits & Vendors"],["10:00 am \u2013 4:30 pm","Mother's Room Open \u00b7 Kidz Club (Ages 4\u201312)"],["10:00 am \u2013 2:00 pm","Shrine Visitation \u2014 Kursk Root Icon"],["10:00 am \u2013 1:00 pm","Financial Strategic Planning & Budget Committee Meeting"],["10:30 am \u2013 2:00 pm","Finance Committee Meeting"],["10:30 am \u2013 4:00 pm","NAB Antiochian Women Meeting and Lunch"],["11:00 am \u2013 4:00 pm","Teen SOYO Meeting and Workshop"],["11:00 am \u2013 1:00 pm","St. Vladimir's Seminary Alumni Reception \u00b7 St. Tikhon's Seminary Alumni Reception"],["11:00 am \u2013 1:00 pm","Dept. of Inter-Orthodox / Inter-Faith Relations \u00b7 Dept. of Sacred Music"]]],["Afternoon",[["1:00 \u2013 4:00 pm","Antiochian Village Council Meeting"],["2:00 \u2013 4:00 pm","Hellenic College Holy Cross Reception \u00b7 Christian Education Ministry Workshop \u00b7 Dept. of Clergy Insurance & Retirement \u00b7 DCCP Meeting \u00b7 Dept. of Marriage & Parish Family Ministry \u00b7 Dept. of Missions & Evangelism \u00b7 Dept. of Stewardship \u00b7 Dept. of Lay Ministry \u00b7 Young Adult Ministry Meeting \u00b7 Workshops"],["2:00 \u2013 5:00 pm","Choir Workshop / Rehearsals \u00b7 Byzantine Choir Rehearsal"]]],["Evening",[["5:00 \u2013 6:00 pm","Vespers"],["6:00 \u2013 7:30 pm","Dinner on Your Own"],["8:00 \u2013 9:30 pm","Bible Bowl"],["9:30 \u2013 11:00 pm","Bible Bowl After-Social (Ticketed)"],["9:30 \u2013 10:30 pm","VIP Club (by invitation)"],["11:00 \u2013 11:30 pm","Compline"],["11:30 pm \u2013 12:00 am","\u201cAsk Abouna\u201d"]]]]},{"d":"22","n":"Thursday","s":"General Assembly Day","x":[["Morning",[["8:00 \u2013 8:45 am","Bible Study and Confessions"],["8:45 \u2013 10:00 am","Daily Orthros"],["10:00 am \u2013 9:00 pm","Hospitality Center \u00b7 Registration \u00b7 Exhibits & Vendors"],["10:00 am \u2013 4:30 pm","Mother's Room Open \u00b7 Kidz Club (Ages 4\u201312)"],["10:00 am \u2013 2:00 pm","Shrine Visitation \u2014 Kursk Root Icon"],["11:00 am \u2013 4:00 pm","Archdiocese General Assembly"],["11:00 am \u2013 4:30 pm","Teen Lunch and Social"]]],["Afternoon",[["4:00 \u2013 5:00 pm","Choir Rehearsal \u00b7 Byzantine Choir Rehearsal"],["5:00 \u2013 6:30 pm","Great Vespers with Artoklasia"]]],["Evening",[["6:30 \u2013 7:30 pm","Balamand Alumni Reunion"],["7:30 \u2013 11:00 pm","Evening Social Event \u2014 TBD (Ticketed)"],["9:30 \u2013 10:30 pm","VIP Club (by invitation)"],["11:00 \u2013 11:30 pm","Compline"],["11:30 pm \u2013 12:00 am","\u201cAsk Abouna\u201d"]]]]},{"d":"23","n":"Friday","s":"Divine Liturgy & Metropolitan's Address","x":[["Morning",[["7:30 \u2013 8:00 am","Orthros and Confessions"],["8:00 \u2013 10:00 am","Divine Liturgy"],["10:30 am \u2013 9:00 pm","Hospitality Center \u00b7 Registration \u00b7 Exhibits & Vendors"],["10:00 am \u2013 4:30 pm","Mother's Room Open"],["10:30 am \u2013 4:30 pm","Kidz Club (Ages 4\u201312)"],["10:30 am \u2013 2:00 pm","Shrine Visitation \u2014 Kursk Root Icon"]]],["Afternoon",[["11:00 am \u2013 1:00 pm","Metropolitan's Address & Archdiocese General Assembly"],["1:00 \u2013 3:00 pm","OCAN Lunch (by invitation)"],["4:00 \u2013 5:00 pm","Choir Rehearsal \u00b7 Byzantine Choir Rehearsal"],["5:00 \u2013 6:00 pm","Paraklesis with Order of Saint Ignatius Inductions"]]],["Evening",[["7:30 pm \u2013 12:00 am","Musical Show \u2014 TBD (Ticketed)"],["9:30 \u2013 10:30 pm","VIP Club (by invitation)"]]]]},{"d":"24","n":"Saturday","s":"Grand Banquet Night","x":[["Morning",[["8:00 \u2013 8:45 am","Bible Study and Confessions"],["8:45 \u2013 10:00 am","Daily Orthros"],["10:00 am \u2013 9:00 pm","Registration Open"],["10:00 am \u2013 1:00 pm","Hospitality Center \u00b7 Exhibits & Vendors"],["10:00 \u2013 11:00 am","Shrine Visitation \u2014 Kursk Root Icon"],["11:00 am \u2013 1:00 pm","Oratorical and Choir Festival"]]],["Afternoon",[["1:00 \u2013 3:00 pm","Archdiocese Board of Trustees Luncheon & Meeting"],["1:00 \u2013 3:00 pm","NAC Senior SOYO Alumni Reunion"],["1:00 \u2013 4:00 pm","Teen Lunch & Retreat \u00b7 Young Adult Lunch & Retreat"],["2:00 \u2013 3:30 pm","Choir Workshop / Rehearsal \u00b7 Byzantine Choir Workshop \u00b7 Workshop"],["2:45 \u2013 3:45 pm","Medical Professional Ministry Meeting"],["4:00 \u2013 5:00 pm","Great Vespers"]]],["Evening \u2014 Grand Banquet",[["6:00 \u2013 7:00 pm","Metropolitan Reception (invitation only)"],["6:00 pm \u2013 12:00 am","Grand Banquet \u00b7 Cocktail Hour 6\u20137 pm (Ticketed)"],["6:30 pm \u2013 12:00 am","Mother's Room Open \u00b7 Kidz Club Evening Edition (Ages 4\u201312)"],["9:30 \u2013 10:30 pm","VIP Club (by invitation)"]]]]},{"d":"25","n":"Sunday","s":"Closing Liturgy & Departure","x":[["Morning",[["8:45 \u2013 10:00 am","Orthros and Confessions"],["10:00 am \u2013 12:00 pm","Hierarchical Divine Liturgy"]]]]}];
+  HOOKS['ac-schedule'] = function (r) {
+    var tabs = r.querySelectorAll('[role=tab]'), panels = r.querySelectorAll('[role=tabpanel]');
+    function show(i, focus) {
+      tabs.forEach(function (t, k) { t.setAttribute('aria-selected', k === i ? 'true' : 'false'); t.tabIndex = k === i ? 0 : -1; });
+      panels.forEach(function (p, k) { p.hidden = k !== i; });
+      if (focus) tabs[i].focus();
+    }
+    tabs.forEach(function (t, i) {
+      t.addEventListener('click', function () { show(i); });
+      t.addEventListener('keydown', function (e) {
+        var k = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
+        if (k) { e.preventDefault(); show((i + k + tabs.length) % tabs.length, true); }
+      });
+    });
+  };
+  define('ac-schedule', function (el) {
+    var start = Math.max(0, Math.min(6, parseInt(el.getAttribute('day') || '0', 10) || 0));
+    function name(t) {
+      var out = esc(t).replace(/ \u00b7 /g, '<span class="dot"> \u00b7 </span>');
+      return out.replace(/\s*\((Ticketed|by invitation|invitation only)\)/g, function (m, w) {
+        return ' <span class="chip' + (w === 'Ticketed' ? ' tk' : '') + '">' + (w === 'Ticketed' ? 'Ticketed' : 'By invitation') + '</span>';
+      });
+    }
+    var tabs = SCHED.map(function (d, i) {
+      return '<button type="button" role="tab" id="t' + i + '" aria-controls="p' + i + '" aria-selected="' + (i === start) + '" tabindex="' + (i === start ? 0 : -1) + '">' +
+        '<span class="dn">' + d.n.slice(0, 3) + '</span><span class="dd">7/' + d.d + '</span></button>';
+    }).join('');
+    var panels = SCHED.map(function (d, i) {
+      return '<div role="tabpanel" id="p' + i + '" aria-labelledby="t' + i + '"' + (i === start ? '' : ' hidden') + '>' +
+        '<div class="head"><div class="date"><b>' + d.d + '</b><span>July</span></div><div><h3>' + d.n + '</h3><p>' + esc(d.s) + '</p></div></div>' +
+        d.x.map(function (s) {
+          return '<div class="sec"><h4>' + esc(s[0]) + '</h4><ul>' + s[1].map(function (e) {
+            return '<li><span class="tm">' + esc(e[0]) + '</span><span class="nm">' + name(e[1]) + '</span></li>';
+          }).join('') + '</ul></div>';
+        }).join('') + '</div>';
+    }).join('');
+    return '<style>' + BASE +
+      ':host{height:100%}.card{background:#fff;border-radius:18px;box-shadow:0 0 0 1px rgba(13,7,69,.08),0 18px 40px -26px rgba(13,7,69,.4);overflow:hidden;display:flex;flex-direction:column;min-height:100%}[role=tabpanel]{flex:1 0 auto}' +
+      '.tabs{display:flex;gap:8px;padding:18px 22px;background:' + NAVY + ';overflow-x:auto;scrollbar-width:none}.tabs::-webkit-scrollbar{display:none}' +
+      '[role=tab]{all:unset;cursor:pointer;flex:1 0 auto;min-width:76px;text-align:center;padding:9px 12px;border-radius:999px;color:' + SHORE + ';box-shadow:inset 0 0 0 1.5px rgba(250,248,245,.35);font-family:Oswald,sans-serif;font-weight:500;letter-spacing:.12em;text-transform:uppercase;font-size:13px;line-height:1.2;transition:background .2s ease,color .2s ease}' +
+      '[role=tab] .dd{display:block;font-size:11px;letter-spacing:.08em;opacity:.75;margin-top:2px}' +
+      '[role=tab]:hover{background:rgba(250,248,245,.1)}[role=tab][aria-selected=true]{background:' + GOLD + ';color:' + NAVY + ';box-shadow:none}' +
+      '[role=tab]:focus-visible{outline:2px solid ' + GOLD + ';outline-offset:2px}' +
+      '[role=tabpanel]{padding:26px 30px 30px}' +
+      '.head{display:flex;gap:16px;align-items:center;padding-bottom:18px;border-bottom:1px solid rgba(13,7,69,.12)}' +
+      '.date{flex:none;width:60px;height:62px;border-radius:10px;background:' + NAVY + ';color:' + SHORE + ';display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:Oswald,sans-serif}' +
+      '.date b{font-size:26px;font-weight:600;line-height:1;color:' + GOLD + '}.date span{font-size:10px;letter-spacing:.18em;text-transform:uppercase;margin-top:3px}' +
+      'h3{font-family:Oswald,sans-serif;font-weight:500;font-size:26px;margin:0;line-height:1.1}.head p{margin:3px 0 0;font-size:14px;color:rgba(13,7,69,.65)}' +
+      '.sec{margin-top:18px}h4{font-family:Oswald,sans-serif;font-weight:500;font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:' + MAROON + ';margin:0 0 4px}' +
+      'ul{list-style:none;margin:0;padding:0}li{display:grid;grid-template-columns:172px 1fr;gap:16px;padding:8px 0;border-bottom:1px solid rgba(13,7,69,.07);font-size:14px;line-height:1.5}li:last-child{border-bottom:0}' +
+      '.tm{color:rgba(13,7,69,.62);font-variant-numeric:tabular-nums;white-space:nowrap}.nm{color:' + NAVY + '}.dot{color:rgba(13,7,69,.35)}' +
+      '.chip{display:inline-block;font-family:Oswald,sans-serif;font-size:10px;letter-spacing:.14em;text-transform:uppercase;padding:2px 7px;border-radius:999px;background:rgba(13,7,69,.07);color:rgba(13,7,69,.7);vertical-align:2px;white-space:nowrap}' +
+      '.chip.tk{background:rgba(144,41,79,.1);color:' + MAROON + '}' +
+      '.note{margin:0;padding:14px 30px 18px;font-size:12.5px;color:rgba(13,7,69,.6);border-top:1px solid rgba(13,7,69,.08);background:' + SHORE + '}' +
+      '@media(max-width:600px){.tabs{padding:14px}[role=tab]{min-width:64px;padding:8px 10px}[role=tabpanel]{padding:20px 18px 22px}li{grid-template-columns:1fr;gap:0;padding:9px 0}.tm{font-size:12.5px}h3{font-size:22px}.note{padding:12px 18px 16px}}' +
+      '@media(prefers-reduced-motion:reduce){[role=tab]{transition:none}}</style>' +
+      '<div class="card"><div class="tabs" role="tablist" aria-label="Convention days">' + tabs + '</div>' + panels +
+      '<p class="note">Times may change before the Convention. Ticketed events are added on when you register.</p></div>';
+  }, ['day']);
+
 })();
