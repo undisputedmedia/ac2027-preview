@@ -135,7 +135,7 @@
     bar.addEventListener('focusin', function () { paused = true; });
     bar.addEventListener('focusout', function () { paused = false; });
     function pin() {
-      var hd = document.querySelector('ac-header'), off = hd ? hd.getBoundingClientRect().height : 0;
+      var hd = document.querySelector('ac-header'), hb = hd && hd.shadowRoot && hd.shadowRoot.querySelector('.bar'), off = hb ? hb.offsetHeight : 0;
       var on = host.getBoundingClientRect().top <= off;
       bar.classList.toggle('pin', on);
       bar.style.top = on ? off + 'px' : '';
