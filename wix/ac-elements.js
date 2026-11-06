@@ -2,7 +2,7 @@
    Text that crawlers must read lives in native Wix text, not here.
    Wix: Add > Embed Code > Custom Element > Server URL =
    https://undisputedmedia.github.io/ac2027-preview/wix/ac-elements.js
-   Tags: ac-header, ac-ratecard, ac-buttons, ac-hero-bg, ac-footer-links, ac-journal-samples, ac-journal-book, ac-schedule
+   Tags: ac-header, ac-ratecard, ac-buttons, ac-hero-bg, ac-footer-links, ac-journal-samples, ac-journal-book, ac-schedule, ac-sponsors
    Keep this file ASCII-only (use \u escapes) so it renders the same under any charset. */
 (function () {
   var ROOT = 'https://undisputedmedia.github.io/ac2027-preview/';
@@ -198,6 +198,12 @@
     ['card', 'Business Card', 150, 'Color', 1.775, 1.25, 'right', 'c', 'Partial pages'],
     ['name', 'Name Listing', 100, 'No artwork required', 0, 0, 'right', 'c', 'Name listing']
   ];
+  /* short labels for the chip grid and the page tag; church/department rates noted in the spec line */
+  var JB_SHORT = { cf: 'Centerfold', bc: 'Back cover', ifc: 'Inside front cover', ibc: 'Inside back cover', gold: 'Gold page', silver: 'Silver page',
+    full: 'Full page', fullp: 'Full page \u00b7 church', fullg: 'Greyscale page', fullgp: 'Greyscale \u00b7 church', half: 'Half page', qtr: 'Quarter page',
+    eig: 'Eighth page', card: 'Business card', name: 'Name listing' };
+  var JB_TITLE = { fullp: 'Full Page, Color', fullgp: 'Full Page, Greyscale', full: 'Full Page, Color', fullg: 'Full Page, Greyscale' };
+  var JB_GROUP = { 'Premium placements': 'Premium', 'Full pages': 'Full pages', 'Partial pages': 'Partial pages', 'Name listing': 'Listing' };
   HOOKS['ac-journal-book'] = function (r) {
     var host = r.host;
     r.querySelectorAll('[data-id]').forEach(function (b) {
@@ -241,23 +247,23 @@
       stage = '<div class="spread">' + page(filler(14), 'Journal page') + page('<div class="k c">Name listings</div><div class="cols">' + rows + '</div>', 'Name listing page', 'on') + '</div>';
       caption = 'Names are typeset in columns by the journal team. Nothing to design.';
     } else {
-      var right = ad(cur, cur[1]);
+      var right = ad(cur, JB_SHORT[cur[0]] || cur[1]);
       if (cur[0] === 'half') right += filler(6);
-      else if (cur[0] === 'qtr') right = '<div class="row">' + ad(cur, cur[1]) + '<div class="ghost" style="width:' + 3.75 * S + 'px;height:' + 5 * S + 'px"></div></div>' + filler(6);
-      else if (cur[0] === 'eig') right = '<div class="row">' + ad(cur, cur[1]) + '<div class="ghost" style="width:' + 3.75 * S + 'px;height:' + 2.5 * S + 'px"></div></div>' + filler(9);
+      else if (cur[0] === 'qtr') right = '<div class="row">' + ad(cur, JB_SHORT[cur[0]]) + '<div class="ghost" style="width:' + 3.75 * S + 'px;height:' + 5 * S + 'px"></div></div>' + filler(6);
+      else if (cur[0] === 'eig') right = '<div class="row">' + ad(cur, JB_SHORT[cur[0]]) + '<div class="ghost" style="width:' + 3.75 * S + 'px;height:' + 2.5 * S + 'px"></div></div>' + filler(9);
       else if (cur[0] === 'card') right = '<div class="row">' + ad(cur, '') + '<div class="ghost" style="width:' + 1.775 * S + 'px;height:' + 1.25 * S + 'px"></div><div class="ghost" style="width:' + 1.775 * S + 'px;height:' + 1.25 * S + 'px"></div></div>' + filler(11);
-      stage = '<div class="spread">' + page(filler(14), 'Journal page') + page(right, cur[1], 'on') + '</div>';
+      stage = '<div class="spread">' + page(filler(14), 'Journal page') + page(right, JB_SHORT[cur[0]] || cur[1], 'on') + '</div>';
       caption = cur[4] === 7.5 && cur[5] === 10 ? 'A full page of your own, ' + (cur[7] === 'g' ? 'printed in greyscale.' : 'printed in full color.') :
         'Shown to scale on a 7.5' + RQ + ' ' + X + ' 10' + RQ + ' page. The rest of the page is shared.';
     }
     var groups = {}, order = [];
     JB.forEach(function (a) { if (!groups[a[8]]) { groups[a[8]] = []; order.push(a[8]); } groups[a[8]].push(a); });
     var list = order.map(function (g) {
-      return '<div class="grp"><div class="gh">' + g + '</div>' + groups[g].map(function (a) {
-        return '<button type="button" data-id="' + a[0] + '" class="' + (a[0] === cur[0] ? 'sel' : '') + '"><span>' + a[1] + '</span><b>' + money(a[2]) + '</b></button>';
-      }).join('') + '</div>';
+      return '<div class="gh">' + (JB_GROUP[g] || g) + '</div>' + groups[g].map(function (a) {
+        return '<button type="button" data-id="' + a[0] + '" aria-pressed="' + (a[0] === cur[0]) + '" class="' + (a[0] === cur[0] ? 'sel' : '') + '"><span>' + JB_SHORT[a[0]] + '</span><b>' + money(a[2]) + '</b></button>';
+      }).join('');
     }).join('');
-    var spec = cur[4] ? cur[3] + ' ' + MIDDOT + ' ' + inch(cur[4]) + RQ + ' ' + X + ' ' + inch(cur[5]) + RQ : cur[3];
+    var spec = (cur[4] ? cur[3] + ' ' + MIDDOT + ' ' + inch(cur[4]) + RQ + ' ' + X + ' ' + inch(cur[5]) + RQ : cur[3]) + (/p$/.test(cur[0]) && cur[0] !== 'cf' ? ' ' + MIDDOT + ' Church &amp; department rate' : '');
     return '<style>' + BASE +
       '.wrap{display:grid;grid-template-columns:1fr 330px;gap:40px;align-items:stretch}' +
       '.stagebox{background:linear-gradient(180deg,#efe9e2,#e6ddd3);border-radius:18px;padding:34px 20px 24px;display:flex;flex-direction:column;align-items:center;justify-content:center}' +
@@ -286,18 +292,18 @@
       '.cols{columns:2;column-gap:14px}.nl{height:14px;font-size:9px;line-height:14px;color:' + NAVY + '}.nl span{display:inline-block;width:80%;height:4px;border-radius:2px;background:rgba(13,7,69,.12);vertical-align:middle}' +
       '.nl.me{background:' + GOLD + ';border-radius:2px;padding:0 4px;font-weight:500;break-inside:avoid}' +
       '.cap{margin-top:44px;font-size:13px;color:rgba(13,7,69,.65);text-align:center;max-width:470px}' +
-      '.panel{background:#fff;border-radius:18px;box-shadow:0 0 0 1px rgba(13,7,69,.08),0 18px 40px -26px rgba(13,7,69,.4);padding:22px 22px 24px}' +
-      '.sel-name{font-family:Oswald,sans-serif;font-weight:500;font-size:22px;letter-spacing:.04em;text-transform:uppercase;margin:0}' +
-      '.price{font-family:Oswald,sans-serif;font-weight:600;font-size:40px;color:' + MAROON + ';margin:2px 0 0;line-height:1.1}.spec{font-size:13px;color:rgba(13,7,69,.6);margin:2px 0 16px}' +
-      '.btn{display:block;font-size:13px;padding:13px 20px}.mail{display:block;text-align:center;font-size:12px;color:' + MAROON + ';margin-top:10px}' +
-      '.list{margin-top:18px;border-top:1px solid rgba(13,7,69,.1);padding-top:6px;max-height:330px;overflow:auto}' +
-      '.gh{font-family:Oswald,sans-serif;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:' + MAROON + ';margin:12px 0 4px}' +
-      'button{all:unset;box-sizing:border-box;width:100%;display:flex;justify-content:space-between;gap:10px;padding:7px 10px;border-radius:8px;font-size:13px;cursor:pointer;color:' + NAVY + '}' +
-      'button:hover{background:rgba(13,7,69,.05)}button.sel{background:' + NAVY + ';color:' + SHORE + '}button span{flex:1}button b{font-weight:500;white-space:nowrap}button:focus-visible{outline:2px solid ' + MAROON + '}' +
+      '.panel{background:#fff;border-radius:18px;box-shadow:0 0 0 1px rgba(13,7,69,.08),0 18px 40px -26px rgba(13,7,69,.4);padding:20px 20px 20px}' +
+      '.sel-name{font-family:Oswald,sans-serif;font-weight:500;font-size:20px;letter-spacing:.04em;text-transform:uppercase;margin:0;line-height:1.2}' +
+      '.price{font-family:Oswald,sans-serif;font-weight:600;font-size:36px;color:' + MAROON + ';margin:2px 0 0;line-height:1.1}.spec{font-size:12.5px;color:rgba(13,7,69,.6);margin:2px 0 14px}' +
+      '.btn{display:block;font-size:13px;padding:12px 20px}.mail{display:block;text-align:center;font-size:12px;color:' + MAROON + ';margin-top:10px}' +
+      '.list{margin-top:16px;border-top:1px solid rgba(13,7,69,.1);padding-top:4px;display:grid;grid-template-columns:1fr 1fr;gap:6px}' +
+      '.gh{grid-column:1/-1;font-family:Oswald,sans-serif;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:' + MAROON + ';margin:8px 0 0}' +
+      'button{all:unset;box-sizing:border-box;width:100%;display:flex;flex-direction:column;gap:1px;padding:7px 10px;border-radius:9px;font-size:12px;line-height:1.25;cursor:pointer;color:' + NAVY + ';box-shadow:inset 0 0 0 1px rgba(13,7,69,.12)}' +
+      'button:hover{background:rgba(13,7,69,.05)}button.sel{background:' + NAVY + ';color:' + SHORE + ';box-shadow:none}button span{opacity:.85}button b{font-family:Oswald,sans-serif;font-weight:500;font-size:15px;letter-spacing:.02em}button:focus-visible{outline:2px solid ' + MAROON + '}' +
       '@media(max-width:860px){.wrap{grid-template-columns:1fr}.stagebox{overflow:hidden}.spread,.covers{transform:scale(.72);transform-origin:top center;margin-bottom:-110px}}' +
-      '@media(max-width:420px){.stagebox{padding:24px 10px 18px}.spread,.covers{transform:scale(.5);margin-bottom:-175px}.covers{gap:20px}.cap{margin-top:30px;font-size:12px}.list{max-height:none}}' +
+      '@media(max-width:420px){.stagebox{padding:24px 10px 18px}.spread,.covers{transform:scale(.5);margin-bottom:-175px}.covers{gap:20px}.cap{margin-top:30px;font-size:12px}}' +
       '</style><div class="wrap"><div class="stagebox">' + stage + '<p class="cap">' + caption + '</p></div>' +
-      '<div class="panel"><p class="sel-name">' + cur[1] + '</p><p class="price">' + money(cur[2]) + '</p><p class="spec">' + spec + '</p>' +
+      '<div class="panel"><p class="sel-name">' + (JB_TITLE[cur[0]] || cur[1]) + '</p><p class="price">' + money(cur[2]) + '</p><p class="spec">' + spec + '</p>' +
       '<a class="btn navy" href="' + JOURNAL_FORM + '">Reserve This Placement</a><a class="mail" href="mailto:info@ac2027socal.com">Questions? info@ac2027socal.com</a>' +
       '<div class="list" role="listbox" aria-label="Journal placements">' + list + '</div></div></div>';
   }, ['selected']);
@@ -433,5 +439,132 @@
       '<div class="card"><div class="tabs" role="tablist" aria-label="Convention days">' + tabs + '</div>' + panels +
       '<p class="note">Times may change before the Convention. Ticketed events are added on when you register.</p></div>';
   }, ['day']);
+
+  /* sponsors: sponsorship levels (comparison), event sponsorships (filterable) and Legacy Journal
+     placements, in three tabs. attribute tab="levels|events|journal" */
+  var TIER_FORM = 'https://saintandrew.churchofficechms.com/external/form/fa262a4f-ad11-496d-83c1-01d8d8be8b4a';
+  var EVENT_FORM = 'https://saintandrew.churchofficechms.com/external/form/fceb608b-be91-4ab0-9638-38cae4ff47f7';
+  var TIERS = [['Cornerstone', 25000], ['Foundation', 15000], ['Pillar', 10000], ['Heritage', 5000], ['Landmark', 2500]];
+  var TROWS = [ /* label, values per tier (true = included, '' = not included) */
+    ['Legacy Journal', ['Two-page spread or inside cover', 'Inside covers or two-page spread', 'Premier pages', 'Premier pages', 'One full page']],
+    ['Event packages (ticket books, registration included)', ['10', '5', '2', '2', '2']],
+    ['Premium seating at the Grand Banquet', [true, true, true, true, true]],
+    ['Reserved seating at all applicable events', [true, true, true, true, true]],
+    ['Invite-only luncheon with Metropolitan SABA', [true, true, true, '', '']],
+    ['Invite-only event with Fr. Josiah Trenham', [true, true, true, '', '']],
+    ['VIP event featuring Disneyland Fireworks', ['2 invitations', '2 invitations', '2 invitations', '2 invitations', '']],
+    ['Recognition', ['Banner, podium and hotel lobby banner', 'Recognition banner', 'Recognition banner', 'Recognition banner', '']]
+  ];
+  var EVENTS = [['Grand Banquet', 10000], ['Clergy & Wives Breakfast', 10000], ['Board of Trustees Luncheon', 10000], ['Chapel', 5000],
+    ['Convention Welcome Luncheon', 5000], ['Registration & Technology', 5000], ['Kidz Club', 5000], ['Teen Event', 4000], ['Hospitality Hub', 3000],
+    ['Shrine for the Kursk Root Icon', 3000], ['Metropolitan\u2019s Reception', 3000], ['Young Adult Event', 2500], ['Entertainment Event (Wednesday evening)', 2500],
+    ['Bible Bowl', 1000], ['Oratorical Festival', 1000]];
+  var EV_INCL = ['Named recognition in the Convention program and the Legacy Journal', 'Signage at your event naming you or your honoree',
+    'Spoken acknowledgment at the event', 'A listing on the Convention website and in official communications',
+    'A certificate of appreciation from the host parish and Convention leadership'];
+  var EV_BANDS = [['all', 'All events', 0, 1e9], ['10k', '$10,000', 10000, 10000], ['5k', '$5,000', 5000, 5000], ['mid', '$2,500 \u2013 $4,000', 2500, 4000], ['1k', '$1,000', 1000, 1000]];
+  HOOKS['ac-sponsors'] = function (r) {
+    var host = r.host;
+    r.querySelectorAll('[role=tab]').forEach(function (t, i, all) {
+      t.addEventListener('click', function () { host.setAttribute('tab', t.getAttribute('data-tab')); });
+      t.addEventListener('keydown', function (e) {
+        var k = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
+        if (k) { e.preventDefault(); var n = all[(i + k + all.length) % all.length]; host.setAttribute('tab', n.getAttribute('data-tab')); setTimeout(function () { var f = host.shadowRoot.querySelector('[role=tab][aria-selected=true]'); if (f) f.focus(); }, 0); }
+      });
+    });
+    r.querySelectorAll('[data-tier]').forEach(function (b) { b.addEventListener('click', function () { host.setAttribute('tier', b.getAttribute('data-tier')); }); });
+    r.querySelectorAll('[data-band]').forEach(function (b) {
+      b.addEventListener('click', function () {
+        var band = EV_BANDS.filter(function (x) { return x[0] === b.getAttribute('data-band'); })[0];
+        r.querySelectorAll('[data-band]').forEach(function (o) { o.setAttribute('aria-pressed', o === b ? 'true' : 'false'); });
+        r.querySelectorAll('.ev').forEach(function (e) { var p = +e.getAttribute('data-p'); e.hidden = !(p >= band[2] && p <= band[3]); });
+      });
+    });
+    r.querySelectorAll('.tcol').forEach(function (c) {
+      c.addEventListener('mouseenter', function () { r.querySelectorAll('[data-col="' + c.getAttribute('data-col') + '"]').forEach(function (x) { x.classList.add('hl'); }); });
+      c.addEventListener('mouseleave', function () { r.querySelectorAll('.hl').forEach(function (x) { x.classList.remove('hl'); }); });
+    });
+  };
+  define('ac-sponsors', function (el) {
+    var tab = el.getAttribute('tab') || 'levels', tier = Math.max(0, Math.min(4, parseInt(el.getAttribute('tier') || '0', 10) || 0));
+    function money(n) { return '$' + String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ','); }
+    var CHECK = '<svg viewBox="0 0 20 20" width="18" height="18" aria-label="Included"><circle cx="10" cy="10" r="9" fill="' + GOLD + '"/><path d="M6 10.4l2.6 2.6L14.2 7.4" fill="none" stroke="' + NAVY + '" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+    var DASH = '<span class="no" aria-label="Not included">\u2014</span>';
+    function cell(v) { return v === true ? CHECK : v === '' ? DASH : esc(v); }
+    var tabs = [['levels', 'Sponsorship levels', 'Levels'], ['events', 'Event sponsorships', 'Events'], ['journal', 'Legacy Journal', 'Journal']].map(function (t) {
+      return '<button type="button" role="tab" data-tab="' + t[0] + '" aria-selected="' + (t[0] === tab) + '" tabindex="' + (t[0] === tab ? 0 : -1) + '"><span class="lg">' + t[1] + '</span><span class="sh">' + t[2] + '</span></button>';
+    }).join('');
+    var body = '';
+    if (tab === 'levels') {
+      var head = '<div class="mx"><div class="mh rl"></div>' + TIERS.map(function (t, i) {
+        return '<div class="mh tcol" data-col="' + i + '"><span class="tn">' + t[0] + '</span><span class="tp">' + money(t[1]) + '</span></div>';
+      }).join('');
+      var rows = TROWS.map(function (row) {
+        return '<div class="rl">' + esc(row[0]) + '</div>' + row[1].map(function (v, i) { return '<div class="mc tcol" data-col="' + i + '">' + cell(v) + '</div>'; }).join('');
+      }).join('');
+      var foot = '<div class="rl"></div>' + TIERS.map(function (t, i) {
+        return '<div class="mc tcol" data-col="' + i + '"><a class="btn sm navy" href="' + TIER_FORM + '">Sponsor</a></div>';
+      }).join('') + '</div>';
+      var chips = '<div class="chips">' + TIERS.map(function (t, i) {
+        return '<button type="button" data-tier="' + i + '" aria-pressed="' + (i === tier) + '"><span>' + t[0] + '</span><b>' + money(t[1]) + '</b></button>';
+      }).join('') + '</div>';
+      var card = '<div class="tcard"><div class="th"><span>' + TIERS[tier][0] + ' Sponsor</span><b>' + money(TIERS[tier][1]) + '</b></div><ul>' +
+        TROWS.map(function (row) { var v = row[1][tier]; return v === '' ? '' : '<li>' + CHECK + '<span><em>' + esc(row[0]) + '</em>' + (v === true ? '' : '<strong>' + esc(v) + '</strong>') + '</span></li>'; }).join('') +
+        '</ul><a class="btn navy" href="' + TIER_FORM + '">Become a ' + TIERS[tier][0] + ' Sponsor</a></div>';
+      body = '<div class="desk">' + head + rows + foot + '</div><div class="mob">' + chips + card + '</div>' +
+        '<p class="note">Every level includes a listing in the Legacy Journal and on the Convention website. Sponsorships are tax-deductible to the extent permitted by law.</p>';
+    } else if (tab === 'events') {
+      body = '<div class="filt" role="group" aria-label="Filter by amount">' + EV_BANDS.map(function (b, i) {
+        return '<button type="button" data-band="' + b[0] + '" aria-pressed="' + (i === 0) + '">' + b[1] + '</button>';
+      }).join('') + '</div><div class="evs">' + EVENTS.map(function (e) {
+        return '<a class="ev" data-p="' + e[1] + '" href="' + EVENT_FORM + '"><span class="en">' + esc(e[0]) + '</span><span class="ep">' + money(e[1]) + '</span><span class="eg">Sponsor \u2192</span></a>';
+      }).join('') + '</div><div class="incl"><h4>Every event sponsorship includes</h4><ul>' + EV_INCL.map(function (t) { return '<li>' + CHECK + '<span>' + esc(t) + '</span></li>'; }).join('') + '</ul></div>';
+    } else {
+      var groups = {}, order = [];
+      JB.forEach(function (a) { var g = JB_GROUP[a[8]] || a[8]; if (!groups[g]) { groups[g] = []; order.push(g); } groups[g].push(a); });
+      body = order.map(function (g) {
+        return '<h4 class="jg">' + g + '</h4><div class="jt">' + groups[g].map(function (a) {
+          var W = 36, H = 48, sc = W / 7.5, fill;
+          if (a[0] === 'name') fill = '<i class="nl"></i><i class="nl"></i><i class="nl me"></i><i class="nl"></i>';
+          else if (a[0] === 'cf') fill = '<i class="f" style="inset:0"></i>';
+          else fill = '<i class="f ' + a[7] + '" style="left:0;top:0;width:' + Math.max(4, a[4] * sc) + 'px;height:' + Math.max(3, a[5] * sc) + 'px"></i>';
+          var thumb = '<span class="mp' + (a[0] === 'cf' ? ' cfp' : '') + '" style="width:' + (a[0] === 'cf' ? W * 2 : W) + 'px;height:' + H + 'px">' + fill + '</span>';
+          var spec = a[4] ? (Math.round(a[4] * 1000) / 1000) + '\u2033 \u00d7 ' + a[5] + '\u2033' : 'No artwork';
+          return '<a class="jp" href="' + JOURNAL_FORM + '">' + thumb + '<span class="jn">' + JB_SHORT[a[0]] + '</span><span class="js">' + spec + (a[7] === 'g' ? ' \u00b7 greyscale' : '') + '</span><span class="jpz">' + money(a[2]) + '</span></a>';
+        }).join('') + '</div>';
+      }).join('') + '<p class="note">Tap any placement to reserve it through the Saint Andrew form. <a href="/journal">See each one drawn to scale in the book \u2192</a></p>';
+    }
+    return '<style>' + BASE +
+      ':host{height:100%}.card{background:#fff;border-radius:18px;box-shadow:0 0 0 1px rgba(13,7,69,.08),0 18px 40px -26px rgba(13,7,69,.4);overflow:hidden;min-height:100%;display:flex;flex-direction:column}' +
+      '.tabs{display:flex;gap:8px;padding:16px 20px;background:' + NAVY + ';overflow-x:auto;scrollbar-width:none}.tabs::-webkit-scrollbar{display:none}' +
+      '[role=tab]{all:unset;cursor:pointer;flex:1 0 auto;text-align:center;padding:11px 16px;border-radius:999px;color:' + SHORE + ';box-shadow:inset 0 0 0 1.5px rgba(250,248,245,.35);font-family:Oswald,sans-serif;font-weight:500;letter-spacing:.12em;text-transform:uppercase;font-size:13px;transition:background .2s ease,color .2s ease}' +
+      '[role=tab]:hover{background:rgba(250,248,245,.1)}[role=tab][aria-selected=true]{background:' + GOLD + ';color:' + NAVY + ';box-shadow:none}[role=tab]:focus-visible{outline:2px solid ' + GOLD + ';outline-offset:2px}' +
+      '.pane{padding:24px 26px 26px;flex:1 0 auto}' +
+      '.mx{display:grid;grid-template-columns:1.35fr repeat(5,1fr);font-size:13px}.mx>div{padding:10px 8px;border-bottom:1px solid rgba(13,7,69,.08);display:flex;align-items:center}' +
+      '.rl{color:rgba(13,7,69,.72);padding-left:0!important}.mc{justify-content:center;text-align:center;color:' + NAVY + ';line-height:1.35}.mh{flex-direction:column;justify-content:center!important;border-bottom:2px solid ' + NAVY + '!important}' +
+      '.tn{font-family:Oswald,sans-serif;font-weight:500;letter-spacing:.12em;text-transform:uppercase;font-size:12.5px}.tp{font-family:Oswald,sans-serif;font-weight:600;font-size:24px;color:' + MAROON + ';line-height:1.15}' +
+      '.tcol{transition:background .15s ease;border-radius:0}.tcol.hl{background:rgba(253,206,62,.16)}.mx>div:nth-last-child(-n+6){border-bottom:0}' +
+      '.no{color:rgba(13,7,69,.28);font-size:16px}.btn.sm{font-size:12px;padding:9px 18px;letter-spacing:.12em}' +
+      '.note{margin:16px 0 0;font-size:12.5px;color:rgba(13,7,69,.6)}.note a{color:' + MAROON + '}' +
+      '.mob{display:none}.chips{display:grid;grid-template-columns:1fr 1fr;gap:8px}' +
+      '.chips button,.filt button{all:unset;box-sizing:border-box;cursor:pointer;border-radius:10px;padding:8px 10px;box-shadow:inset 0 0 0 1px rgba(13,7,69,.14);font-size:12.5px;display:flex;flex-direction:column;color:' + NAVY + '}' +
+      '.chips b{font-family:Oswald,sans-serif;font-weight:500;font-size:16px}.chips button[aria-pressed=true],.filt button[aria-pressed=true]{background:' + NAVY + ';color:' + SHORE + ';box-shadow:none}' +
+      '.tcard{margin-top:14px;border-radius:14px;overflow:hidden;box-shadow:0 0 0 1px rgba(13,7,69,.1)}.th{display:flex;justify-content:space-between;align-items:center;background:' + NAVY + ';color:' + SHORE + ';padding:12px 16px;font-family:Oswald,sans-serif;letter-spacing:.1em;text-transform:uppercase;font-size:13px}.th b{color:' + GOLD + ';font-size:22px;letter-spacing:0}' +
+      '.tcard ul,.incl ul{list-style:none;margin:0;padding:12px 16px;display:grid;gap:9px}.tcard li,.incl li{display:grid;grid-template-columns:20px 1fr;gap:10px;font-size:13px;line-height:1.45;align-items:start}.tcard em{font-style:normal;display:block}.tcard strong{display:block;font-weight:500;color:' + MAROON + '}' +
+      '.tcard .btn{margin:4px 16px 16px;display:block;text-align:center;font-size:13px;padding:12px}' +
+      '.filt{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}.filt button{flex-direction:row;font-family:Oswald,sans-serif;letter-spacing:.08em;text-transform:uppercase;font-size:12px;padding:8px 14px;border-radius:999px}' +
+      '.evs{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.ev{display:grid;grid-template-columns:1fr auto;grid-template-areas:"n p" "n g";gap:2px 12px;padding:13px 14px;border-radius:12px;background:' + SHORE + ';text-decoration:none;color:' + NAVY + ';box-shadow:inset 0 0 0 1px rgba(13,7,69,.06);transition:transform .15s ease,box-shadow .15s ease}' +
+      '.ev[hidden]{display:none}.ev:hover{transform:translateY(-2px);box-shadow:inset 0 0 0 1.5px ' + GOLD + ',0 10px 20px -14px rgba(13,7,69,.5)}.en{grid-area:n;font-size:13.5px;line-height:1.35;align-self:center}.ep{grid-area:p;font-family:Oswald,sans-serif;font-weight:600;font-size:18px;color:' + MAROON + ';text-align:right}.eg{grid-area:g;font-family:Oswald,sans-serif;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:rgba(13,7,69,.55);text-align:right}' +
+      '.incl{margin-top:18px;border-radius:12px;box-shadow:inset 0 0 0 1px rgba(13,7,69,.1)}.incl h4,.jg{font-family:Oswald,sans-serif;font-weight:500;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:' + MAROON + ';margin:0}.incl h4{padding:14px 16px 0}.incl ul{grid-template-columns:1fr 1fr;column-gap:22px}' +
+      '.jg{margin:12px 0 7px}.jg:first-child{margin-top:0}.jt{display:grid;grid-template-columns:repeat(6,1fr);gap:8px}.sh{display:none}' +
+      '.jp{display:grid;justify-items:center;gap:2px;padding:10px 6px 8px;border-radius:12px;background:' + SHORE + ';text-decoration:none;color:' + NAVY + ';text-align:center;transition:transform .15s ease,box-shadow .15s ease}.jp:hover{transform:translateY(-2px);box-shadow:inset 0 0 0 1.5px ' + GOLD + ',0 10px 20px -14px rgba(13,7,69,.5)}' +
+      '.mp{position:relative;background:#fff;border-radius:2px;box-shadow:0 0 0 1px rgba(13,7,69,.14),0 4px 10px -6px rgba(13,7,69,.4);margin-bottom:5px;overflow:hidden;display:block}.mp.cfp:after{content:"";position:absolute;top:0;bottom:0;left:50%;width:1px;background:rgba(13,7,69,.25)}' +
+      '.f{position:absolute;background:' + NAVY + '}.f.g{background:#4a4a50}.f.gold{background:linear-gradient(135deg,#b8892a,#f3d27a 45%,#b8892a)}.f.silver{background:linear-gradient(135deg,#8d9196,#e9ebee 45%,#8d9196)}' +
+      '.nl{display:block;height:3px;margin:5px 5px 0;border-radius:2px;background:rgba(13,7,69,.14)}.nl.me{background:' + GOLD + '}' +
+      '.jn{font-size:12.5px;line-height:1.25;font-weight:500}.js{font-size:10.5px;color:rgba(13,7,69,.55)}.jpz{font-family:Oswald,sans-serif;font-weight:600;font-size:17px;color:' + MAROON + '}' +
+      '@media(max-width:760px){.desk{display:none}.mob{display:block}.pane{padding:18px 14px 20px}.tabs{padding:12px;gap:6px}[role=tab]{font-size:12px;padding:9px 8px;letter-spacing:.1em}.lg{display:none}.sh{display:inline}.evs{grid-template-columns:1fr 1fr;gap:8px}.ev{grid-template-columns:1fr;grid-template-areas:"n" "p";padding:11px 10px}.ep{text-align:left;font-size:16px}.eg{display:none}.en{font-size:12.5px;align-self:start}.incl ul{grid-template-columns:1fr}.jt{grid-template-columns:repeat(3,1fr);gap:6px}.jn{font-size:11px}.js{font-size:9.5px}.jpz{font-size:15px}}' +
+      '@media(prefers-reduced-motion:reduce){[role=tab],.ev,.jp,.tcol{transition:none}.ev:hover,.jp:hover{transform:none}}</style>' +
+      '<div class="card"><div class="tabs" role="tablist" aria-label="Ways to support the Convention">' + tabs + '</div><div class="pane" role="tabpanel">' + body + '</div></div>';
+  }, ['tab', 'tier']);
 
 })();
