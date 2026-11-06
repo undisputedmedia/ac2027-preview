@@ -93,7 +93,7 @@
       '@media(max-width:420px){.bt{display:none}.bar{gap:12px}.mark{height:48px}}' +
       '.open nav{display:flex;flex-direction:column;gap:0;position:fixed;left:0;right:0;top:76px;background:' + SHORE + ';padding:6px 22px 14px;border-bottom:1px solid rgba(13,7,69,.13);box-shadow:0 18px 30px -22px rgba(13,7,69,.4);z-index:50}' +
       '.open nav a{padding:13px 0;border-bottom:1px solid rgba(13,7,69,.13)}}</style>' +
-      '<div class="bar"><a href="/"><img class="mark" src="' + ROOT + 'img/mark.png" alt="58th Biennial Antiochian Archdiocese Convention ' + MDASH + ' SoCal"></a>' +
+      '<div class="bar"><a href="/"><img class="mark" src="' + ROOT + 'img/mark-192.webp" width="192" height="199" decoding="async" alt="58th Biennial Antiochian Archdiocese Convention ' + MDASH + ' SoCal"></a>' +
       '<a class="bt" href="/"><div class="l1">AC2027 SoCal</div><div class="l2">July 19' + NDASH + '25, 2027 ' + MIDDOT + ' Anaheim, California</div></a>' +
       '<nav>' + links + '</nav><button class="tog" aria-expanded="false">Menu</button>' +
       '<a class="btn navy cta" href="/hotel">Book Room</a></div>';
@@ -223,7 +223,7 @@
     var stage, where = cur[6], caption = '';
     var plain = filler(14);
     if (where === 'back' ) {
-      stage = '<div class="covers"><div class="pg cover front"><img src="' + ROOT + 'img/mark.png" alt=""><div class="ct">Legacy Journal</div><div class="cs">58th Biennial Antiochian Archdiocese Convention ' + MIDDOT + ' 2027</div><div class="tag">Front cover</div></div>' +
+      stage = '<div class="covers"><div class="pg cover front"><img src="' + ROOT + 'img/mark.webp" alt="" loading="lazy"><div class="ct">Legacy Journal</div><div class="cs">58th Biennial Antiochian Archdiocese Convention ' + MIDDOT + ' 2027</div><div class="tag">Front cover</div></div>' +
         '<div class="pg cover back on"><div class="live">' + ad(cur, 'Back cover') + '</div><div class="tag">Back cover</div></div></div>';
       caption = 'The outside back cover: the most-seen page of the book.';
     } else if (where === 'center') {
@@ -346,8 +346,8 @@
       '.mark{width:150px;height:auto;display:block;margin:0 auto 10px}' +
       '.script{font-family:GreatVibes,cursive;color:#fff;font-size:54px;line-height:1.2;margin:0;text-shadow:0 2px 14px rgba(120,40,60,.28)}' +
       '@media(max-width:900px){.script{display:none}.mark{width:112px}}</style>' +
-      '<img class="bg" src="' + ROOT + 'img/sunset.jpg" alt=""><div class="wash"></div>' +
-      (band ? '' : '<div class="top"><img class="mark" src="' + ROOT + 'img/mark.png" alt=""><p class="script">Southern California is calling.</p></div>');
+      '<img class="bg" src="' + ROOT + 'img/sunset.webp" alt="" fetchpriority="high"><div class="wash"></div>' +
+      (band ? '' : '<div class="top"><img class="mark" src="' + ROOT + 'img/mark.webp" width="420" height="436" alt=""><p class="script">Southern California is calling.</p></div>');
   }, ['variant']);
 
   /* footer links (the canonical facts block stays native text beside it) */

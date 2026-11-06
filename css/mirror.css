@@ -29,3 +29,9 @@ section{position:relative;width:100%;overflow:visible}
 .ac-anim{opacity:0;transform:translateY(28px);transition:opacity .9s cubic-bezier(.22,.61,.36,1),transform .9s cubic-bezier(.22,.61,.36,1)}
 .ac-anim.in{opacity:1;transform:none}
 @media (prefers-reduced-motion:reduce){.ac-anim{opacity:1;transform:none;transition:none}}
+/* Right-column cards (5 Nov): cream cards on navy, matching the Wix boxes */
+.accard{background:#faf8f5;border-radius:14px;padding:14px 20px 15px;margin:0 0 10px;box-shadow:0 6px 18px rgba(0,0,0,.18)}
+.accard p,.accard p *{color:#0d0745!important}
+.accard p.lab,.accard p.lab *{color:#90294f!important}
+.accard a{color:#90294f!important}
+.accard .muted{color:#6b6880!important}
