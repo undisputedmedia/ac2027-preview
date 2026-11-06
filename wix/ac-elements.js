@@ -2,7 +2,7 @@
    Text that crawlers must read lives in native Wix text, not here.
    Wix: Add > Embed Code > Custom Element > Server URL =
    https://undisputedmedia.github.io/ac2027-preview/wix/ac-elements.js
-   Tags: ac-header, ac-ratecard, ac-buttons, ac-hero-bg, ac-footer-links, ac-journal-samples, ac-journal-book, ac-schedule, ac-sponsors
+   Tags: ac-header, ac-newsbar, ac-ratecard, ac-buttons, ac-hero-bg, ac-footer-links, ac-journal-samples, ac-journal-book, ac-schedule, ac-sponsors
    Keep this file ASCII-only (use \u escapes) so it renders the same under any charset. */
 (function () {
   var ROOT = 'https://undisputedmedia.github.io/ac2027-preview/';
@@ -98,6 +98,56 @@
       '<nav>' + links + '</nav><button class="tog" aria-expanded="false">Menu</button>' +
       '<a class="btn navy cta" href="/hotel">Book Room</a></div>';
   }, ['current']);
+
+  /* news bar: maroon announcement strip under the header. One item shows at a time and the next
+     slides in every 5 s; pauses on hover/focus; no motion under prefers-reduced-motion.
+     Once the header scrolls away the bar pins to the top of the screen.
+     Edit NEWS to change the announcements on every page at once. */
+  var NEWS = [
+    ['Hotel rooms are open at $209 a night', 'Book now', PASSKEY],
+    ['Registration opens soon', 'Get notified', '/get-notified'],
+    ['Sponsorships and Legacy Journal pages are open', 'See options', '/sponsorships'],
+    ['Volunteers needed on 14 teams', 'Sign up', '/volunteer']
+  ];
+  HOOKS['ac-newsbar'] = function (r) {
+    var host = r.host, bar = r.querySelector('.bar'), items = r.querySelectorAll('.it'), i = 0, paused = false;
+    var still = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (host._acTimer) clearInterval(host._acTimer);
+    function show(n) {
+      items.forEach(function (it, k) { it.classList.toggle('on', k === n); it.setAttribute('aria-hidden', k === n ? 'false' : 'true'); });
+    }
+    show(0);
+    if (items.length > 1) host._acTimer = setInterval(function () { if (!paused && !document.hidden) { i = (i + 1) % items.length; show(i); } }, 5000);
+    if (still) { clearInterval(host._acTimer); }
+    bar.addEventListener('mouseenter', function () { paused = true; });
+    bar.addEventListener('mouseleave', function () { paused = false; });
+    bar.addEventListener('focusin', function () { paused = true; });
+    bar.addEventListener('focusout', function () { paused = false; });
+    function pin() {
+      var t = host.getBoundingClientRect().top;
+      bar.classList.toggle('pin', t <= 0);
+    }
+    if (!host._acPin) { host._acPin = true; window.addEventListener('scroll', pin, { passive: true }); window.addEventListener('resize', pin); }
+    pin();
+  };
+  define('ac-newsbar', function () {
+    var list = NEWS.map(function (n, k) {
+      return '<a class="it' + (k === 0 ? ' on' : '') + '" href="' + esc(n[2]) + '"><span class="tx">' + esc(n[0]) + '</span><span class="go">' + esc(n[1]) + ' \u2192</span></a>';
+    }).join('');
+    return '<style>' + BASE + ':host{display:block;height:100%}' +
+      '.bar{position:absolute;top:0;left:calc(50% - 50vw);width:100vw;height:100%;min-height:34px;background:' + MAROON + ';overflow:hidden;z-index:40}' +
+      '.bar.pin{position:fixed;top:0;left:0;right:0;width:100%;height:36px;box-shadow:0 6px 16px -10px rgba(13,7,69,.55)}' +
+      '.it{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;gap:14px;padding:0 16px;color:#fff;text-decoration:none;' +
+      'opacity:0;transform:translateX(40px);transition:opacity .45s ease,transform .45s ease;pointer-events:none}' +
+      '.it.on{opacity:1;transform:none;pointer-events:auto}' +
+      '.tx{font-size:13px;letter-spacing:.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}' +
+      '.go{font-family:Oswald,sans-serif;font-weight:500;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:' + GOLD + ';white-space:nowrap}' +
+      '.it:hover .go,.it:focus .go{text-decoration:underline}' +
+      '.it:focus-visible{outline:2px solid ' + GOLD + ';outline-offset:-4px}' +
+      '@media(max-width:600px){.tx{font-size:12px}.go{font-size:11px}.it{gap:10px}}' +
+      '@media(prefers-reduced-motion:reduce){.it{transition:none;transform:none}}</style>' +
+      '<div class="bar" role="region" aria-label="Announcements">' + list + '</div>';
+  });
 
   /* rate card */
   define('ac-ratecard', function () {
