@@ -223,7 +223,7 @@
     var stage, where = cur[6], caption = '';
     var plain = filler(14);
     if (where === 'back' ) {
-      stage = '<div class="covers"><div class="pg cover front"><img src="' + ROOT + 'img/mark.webp" alt="" loading="lazy"><div class="ct">Legacy Journal</div><div class="cs">58th Biennial Antiochian Archdiocese Convention ' + MIDDOT + ' 2027</div><div class="tag">Front cover</div></div>' +
+      stage = '<div class="covers"><div class="pg cover front"><img src="' + ROOT + 'img/mark-keyline.webp" alt="" loading="lazy"><div class="ct">Legacy Journal</div><div class="cs">58th Biennial Antiochian Archdiocese Convention ' + MIDDOT + ' 2027</div><div class="tag">Front cover</div></div>' +
         '<div class="pg cover back on"><div class="live">' + ad(cur, 'Back cover') + '</div><div class="tag">Back cover</div></div></div>';
       caption = 'The outside back cover: the most-seen page of the book.';
     } else if (where === 'center') {
@@ -347,7 +347,7 @@
       '.script{font-family:GreatVibes,cursive;color:#fff;font-size:54px;line-height:1.2;margin:0;text-shadow:0 2px 14px rgba(120,40,60,.28)}' +
       '@media(max-width:900px){.script{display:none}.mark{width:112px}}</style>' +
       '<img class="bg" src="' + ROOT + 'img/sunset.webp" alt="" fetchpriority="high"><div class="wash"></div>' +
-      (band ? '' : '<div class="top"><img class="mark" src="' + ROOT + 'img/mark.webp" width="420" height="436" alt=""><p class="script">Southern California is calling.</p></div>');
+      (band ? '' : '<div class="top"><img class="mark" src="' + ROOT + 'img/mark-keyline.webp" width="420" height="436" alt=""><p class="script">Southern California is calling.</p></div>');
   }, ['variant']);
 
   /* footer links (the canonical facts block stays native text beside it) */
