@@ -70,7 +70,17 @@
   /* header: logo, nav, Book Room. attribute current="/hotel" */
   var NAV = [['/', 'Home'], ['/about', 'About'], ['/hotel', 'Hotel'], ['/registration', 'Registration'], ['/sponsorships', 'Sponsors'], ['/faq', 'FAQ'], ['/contact', 'Contact']];
   HOOKS['ac-header'] = function (r) {
-    var b = r.querySelector('.tog'), bar = r.querySelector('.bar');
+    var b = r.querySelector('.tog'), bar = r.querySelector('.bar'), host = r.host;
+    /* sticky: once the page scrolls, the bar is fixed to the top of the screen at the same
+       position and width; the host keeps its 76px so nothing below jumps */
+    function pin() {
+      var h = host.getBoundingClientRect(), on = h.top < 0;
+      bar.classList.toggle('pin', on);
+      bar.style.left = on ? h.left + 'px' : '';
+      bar.style.width = on ? h.width + 'px' : '';
+    }
+    if (!host._acPin) { host._acPin = true; window.addEventListener('scroll', pin, { passive: true }); window.addEventListener('resize', pin); }
+    pin();
     b.addEventListener('click', function () {
       var o = bar.classList.toggle('open');
       b.setAttribute('aria-expanded', o ? 'true' : 'false');
@@ -81,7 +91,8 @@
     var cur = el.getAttribute('current') || '';
     var links = NAV.map(function (n) { return '<a href="' + n[0] + '"' + (n[0] === cur ? ' class="cur"' : '') + '>' + n[1] + '</a>'; }).join('');
     return '<style>' + BASE +
-      ':host{background:' + SHORE + '}.bar{height:76px;display:flex;align-items:center;gap:20px;padding:0 4px}' +
+      ':host{background:' + SHORE + '}.bar{height:76px;display:flex;align-items:center;gap:20px;padding:0 4px;background:' + SHORE + '}' +
+      '.bar.pin{position:fixed;top:0;z-index:60}.bar.pin:before{content:"";position:absolute;top:0;bottom:0;left:-100vw;right:-100vw;background:' + SHORE + ';z-index:-1}' +
       '.mark{height:54px;width:auto;display:block}.bt{line-height:1.15;text-decoration:none;color:' + NAVY + '}' +
       '.l1{font-family:Oswald,sans-serif;font-weight:500;font-size:15px;letter-spacing:.13em;text-transform:uppercase}' +
       '.l2{font-size:11px;letter-spacing:.05em;color:rgba(13,7,69,.58)}' +
@@ -124,8 +135,10 @@
     bar.addEventListener('focusin', function () { paused = true; });
     bar.addEventListener('focusout', function () { paused = false; });
     function pin() {
-      var t = host.getBoundingClientRect().top;
-      bar.classList.toggle('pin', t <= 0);
+      var hd = document.querySelector('ac-header'), off = hd ? hd.getBoundingClientRect().height : 0;
+      var on = host.getBoundingClientRect().top <= off;
+      bar.classList.toggle('pin', on);
+      bar.style.top = on ? off + 'px' : '';
     }
     if (!host._acPin) { host._acPin = true; window.addEventListener('scroll', pin, { passive: true }); window.addEventListener('resize', pin); }
     pin();
@@ -414,7 +427,7 @@
       ['https://saintandrew.churchofficechms.com/external/form/fceb608b-be91-4ab0-9638-38cae4ff47f7', 'Support the Convention']];
     var social = [['https://instagram.com/ac2027socal', 'Instagram'], ['https://facebook.com/ac2027socal', 'Facebook'], ['https://youtube.com/@ac2027socal', 'YouTube'], ['https://x.com/ac2027socal', 'X'], ['https://www.tiktok.com/@ac2027socal', 'TikTok']];
     var trip = [['/guides', 'All Guides'], ['/first-timers-guide', 'First-Timer\u2019s Guide'], ['/travel', 'Travel &amp; Parking'], ['/anaheim', 'Anaheim Guide'],
-      ['/riverside', 'A Day in Riverside'], ['/convention-history', 'Convention History'], ['/antiochian-orthodox', 'The Antiochian Church']];
+      ['/riverside', 'A Day in Riverside'], ['/convention-history', 'Convention History'], ['/antiochian-orthodox', 'The Antiochian<br>Orthodox Church']];
     function col(t, list) {
       return '<div><h4>' + t + '</h4><ul>' + list.map(function (l) { return '<li><a href="' + l[0] + '">' + l[1] + '</a></li>'; }).join('') + '</ul></div>';
     }
