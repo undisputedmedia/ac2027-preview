@@ -436,7 +436,7 @@
       'ul{list-style:none;padding:0;margin:0}li{margin-bottom:10px;font-size:14px}' +
       'a{color:rgba(250,248,245,.86);text-decoration:none}a:hover{color:' + GOLD + '}' +
       '.c2>div+div{margin-top:26px}' +
-      '@media(max-width:400px){.g{grid-template-columns:1fr}}</style>' +
+      '@media(max-width:400px){.g{gap:18px}li{font-size:13.5px}}</style>' +
       '<div class="g"><div class="c2">' + col('Pages', pages) + col('Follow Us', social) + '</div><div class="c2">' + col('Plan Your Trip', trip) + col('Get Involved', involved) + '</div></div>';
   });
 
