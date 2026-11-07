@@ -88,7 +88,7 @@
     });
   };
   define('ac-header', function (el) {
-    var cur = el.getAttribute('current') || '';
+    var cur = el.getAttribute('current') || '', compact = el.hasAttribute('compact');
     var links = NAV.map(function (n) { return '<a href="' + n[0] + '"' + (n[0] === cur ? ' class="cur"' : '') + '>' + n[1] + '</a>'; }).join('');
     return '<style>' + BASE +
       ':host{background:' + SHORE + '}.bar{height:76px;display:flex;align-items:center;gap:20px;padding:0 4px;background:' + SHORE + '}' +
@@ -103,12 +103,19 @@
       '@media(max-width:900px){nav{display:none}.tog{display:block}.l2{display:none}.cta{font-size:11px;padding:9px 14px}' +
       '@media(max-width:420px){.bt{display:none}.bar{gap:12px}.mark{height:48px}}' +
       '.open nav{display:flex;flex-direction:column;gap:0;position:fixed;left:0;right:0;top:76px;background:' + SHORE + ';padding:6px 22px 14px;border-bottom:1px solid rgba(13,7,69,.13);box-shadow:0 18px 30px -22px rgba(13,7,69,.4);z-index:50}' +
-      '.open nav a{padding:13px 0;border-bottom:1px solid rgba(13,7,69,.13)}}</style>' +
-      '<div class="bar"><a href="/"><img class="mark" src="' + ROOT + 'img/mark-192.webp" width="192" height="199" decoding="async" alt="58th Biennial Antiochian Archdiocese Convention ' + MDASH + ' SoCal"></a>' +
+      '.open nav a{padding:13px 0;border-bottom:1px solid rgba(13,7,69,.13)}}' +
+      /* compact (phones): no bar background, logo in a shore circle, floating pill buttons */
+      (compact ? '@media(max-width:760px){:host{background:transparent}.bar{height:52px;gap:8px;padding:0 8px;background:transparent}.bar.pin:before{display:none}' +
+        '.home{display:flex;align-items:center;justify-content:center;flex:none;width:44px;height:44px;border-radius:50%;background:' + SHORE + ';box-shadow:0 4px 14px rgba(13,7,69,.22)}' +
+        '.mark{height:34px}.bt{display:none}.tog{background:' + SHORE + ';border-color:transparent;padding:9px 15px;font-size:12px;box-shadow:0 4px 14px rgba(13,7,69,.22)}' +
+        '.cta{font-size:11px;padding:10px 15px;box-shadow:0 4px 14px rgba(13,7,69,.25),inset 0 0 0 1.5px rgba(250,248,245,.45)}' +
+        '.open nav{top:58px;left:8px;right:8px;border-radius:14px;border:0}}' : '') +
+      '</style>' +
+      '<div class="bar"><a class="home" href="/"><img class="mark" src="' + ROOT + 'img/mark-192.webp" width="192" height="199" decoding="async" alt="58th Biennial Antiochian Archdiocese Convention ' + MDASH + ' SoCal"></a>' +
       '<a class="bt" href="/"><div class="l1">AC2027 SoCal</div><div class="l2">July 19' + NDASH + '25, 2027 ' + MIDDOT + ' Anaheim, California</div></a>' +
       '<nav>' + links + '</nav><button class="tog" aria-expanded="false">Menu</button>' +
       '<a class="btn navy cta" href="/hotel">Book Room</a></div>';
-  }, ['current']);
+  }, ['current', 'compact']);
 
   /* news bar: maroon announcement strip under the header. One item shows at a time and the next
      slides in every 5 s; pauses on hover/focus; no motion under prefers-reduced-motion.
@@ -135,6 +142,16 @@
     bar.addEventListener('focusin', function () { paused = true; });
     bar.addEventListener('focusout', function () { paused = false; });
     function pin() {
+      if (host.getAttribute('dock') === 'bottom' && window.matchMedia && matchMedia('(max-width:760px)').matches) {
+        var q = document.getElementById('QUICK_ACTION_BAR');
+        host.style.setProperty('--qab', ((q && q.offsetHeight) || 0) + 'px');
+        bar.classList.remove('pin'); bar.style.top = '';
+        if (!document.getElementById('ac-dock-pad')) {
+          var st = document.createElement('style'); st.id = 'ac-dock-pad';
+          st.textContent = '@media(max-width:760px){body{padding-bottom:36px}}'; document.head.appendChild(st);
+        }
+        return;
+      }
       var hd = document.querySelector('ac-header'), hb = hd && hd.shadowRoot && hd.shadowRoot.querySelector('.bar'), off = hb ? hb.offsetHeight : 0;
       var on = host.getBoundingClientRect().top <= off;
       bar.classList.toggle('pin', on);
@@ -143,7 +160,8 @@
     if (!host._acPin) { host._acPin = true; window.addEventListener('scroll', pin, { passive: true }); window.addEventListener('resize', pin); }
     pin();
   };
-  define('ac-newsbar', function () {
+  define('ac-newsbar', function (el) {
+    var dock = el.getAttribute('dock') === 'bottom';
     var list = NEWS.map(function (n, k) {
       return '<a class="it' + (k === 0 ? ' on' : '') + '" href="' + esc(n[2]) + '"><span class="tx">' + esc(n[0]) + '</span><span class="go">' + esc(n[1]) + ' \u2192</span></a>';
     }).join('');
@@ -158,9 +176,11 @@
       '.it:hover .go,.it:focus .go{text-decoration:underline}' +
       '.it:focus-visible{outline:2px solid ' + GOLD + ';outline-offset:-4px}' +
       '@media(max-width:600px){.tx{font-size:12px}.go{font-size:11px}.it{gap:10px}}' +
-      '@media(prefers-reduced-motion:reduce){.it{transition:none;transform:none}}</style>' +
+      '@media(prefers-reduced-motion:reduce){.it{transition:none;transform:none}}' +
+      (dock ? '@media(max-width:760px){:host{pointer-events:none}.bar,.bar.pin{position:fixed;top:auto;bottom:var(--qab,0px);left:0;right:0;width:100%;height:36px;pointer-events:auto;box-shadow:0 -6px 16px -10px rgba(13,7,69,.55)}}' : '') +
+      '</style>' +
       '<div class="bar" role="region" aria-label="Announcements">' + list + '</div>';
-  });
+  }, ['dock']);
 
   /* rate card */
   define('ac-ratecard', function () {
