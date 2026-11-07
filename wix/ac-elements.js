@@ -422,6 +422,12 @@
     if (grad) {
       return '<style>' + host + '.g' + layer + '.g{background:linear-gradient(180deg,#FDCE3E 0%,#FDA04D 34%,#FB5063 67%,#AB284A 100%)}</style><div class="g"></div>';
     }
+    /* photo: a plain full-bleed photograph from img/ (no wash). attributes img="parish-aerial", alt, pos="50% 50%" */
+    if (v === 'photo') {
+      var im = esc(el.getAttribute('img') || 'parish-aerial'), alt = esc(el.getAttribute('alt') || ''), pos = esc(el.getAttribute('pos') || '50% 50%');
+      return '<style>' + host + '.bg' + layer + '.bg{object-fit:cover;object-position:' + pos + '}</style>' +
+        '<img class="bg" src="' + ROOT + 'img/' + im + '.webp" srcset="' + ROOT + 'img/' + im + '-sm.webp 1200w, ' + ROOT + 'img/' + im + '.webp 2400w" sizes="100vw" alt="' + alt + '" loading="lazy">';
+    }
     /* church: still of St Andrew from the launch video, light navy wash that deepens toward the form */
     if (v === 'church') {
       return '<style>' + host + '.bg' + layer + '.bg{object-fit:cover;object-position:50% 45%}' +
