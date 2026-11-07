@@ -109,7 +109,7 @@
         '.home{display:flex;align-items:center;justify-content:center;flex:none;width:44px;height:44px;border-radius:50%;background:' + SHORE + ';box-shadow:0 4px 14px rgba(13,7,69,.22)}' +
         '.mark{height:34px}.bt{display:none}.tog{background:' + SHORE + ';border-color:transparent;padding:9px 15px;font-size:12px;box-shadow:0 4px 14px rgba(13,7,69,.22)}' +
         '.cta{display:none}' +
-        '.open nav{top:58px;left:8px;right:8px;border-radius:14px;border:0}}' : '') +
+        '.open nav{top:58px;left:8px;right:8px;border-radius:14px;border:2px solid ' + MAROON + ';box-shadow:0 18px 40px -12px rgba(13,7,69,.55)}.open nav a:last-child{border-bottom:0}.open .tog{border-color:' + MAROON + '}}' : '') +
       '</style>' +
       '<div class="bar"><a class="home" href="/"><img class="mark" src="' + ROOT + 'img/mark-192.webp" width="192" height="199" decoding="async" alt="58th Biennial Antiochian Archdiocese Convention ' + MDASH + ' SoCal"></a>' +
       '<a class="bt" href="/"><div class="l1">AC2027 SoCal</div><div class="l2">July 19' + NDASH + '25, 2027 ' + MIDDOT + ' Anaheim, California</div></a>' +
