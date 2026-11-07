@@ -2,7 +2,7 @@
    Text that crawlers must read lives in native Wix text, not here.
    Wix: Add > Embed Code > Custom Element > Server URL =
    https://undisputedmedia.github.io/ac2027-preview/wix/ac-elements.js
-   Tags: ac-header, ac-newsbar, ac-ratecard, ac-buttons, ac-hero-bg, ac-footer-links, ac-journal-samples, ac-journal-book, ac-schedule, ac-sponsors
+   Tags: ac-header, ac-newsbar, ac-ratecard, ac-buttons, ac-hero-bg, ac-footer-links, ac-journal-samples, ac-journal-book, ac-schedule, ac-sponsors, ac-video
    Keep this file ASCII-only (use \u escapes) so it renders the same under any charset. */
 (function () {
   var ROOT = 'https://undisputedmedia.github.io/ac2027-preview/';
@@ -425,6 +425,40 @@
       '<img class="bg" src="' + ROOT + 'img/sunset.webp" alt="" fetchpriority="high"><div class="wash"></div>' +
       (band ? '' : '<div class="top"><img class="mark" src="' + ROOT + 'img/mark-keyline.webp" width="420" height="436" alt=""><p class="script">Southern California is calling.</p></div>');
   }, ['variant']);
+
+  /* video: click-to-play YouTube facade. Shows a still with a play button; the player only loads
+     (privacy-enhanced domain, rel=0) when someone presses play, so nothing autoplays on page load.
+     attributes: video="<YouTube id>", label="<accessible title>", length="5:18" */
+  HOOKS['ac-video'] = function (r) {
+    var b = r.querySelector('.p'), host = r.host;
+    if (!b) return;
+    b.addEventListener('click', function () {
+      var id = host.getAttribute('video') || 'QroAUEqKRjQ', t = host.getAttribute('label') || 'AC2027 SoCal launch video';
+      var f = document.createElement('iframe');
+      f.src = 'https://www.youtube-nocookie.com/embed/' + encodeURIComponent(id) + '?autoplay=1&rel=0&modestbranding=1&playsinline=1';
+      f.title = t; f.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen'; f.setAttribute('allowfullscreen', '');
+      r.querySelector('.v').innerHTML = ''; r.querySelector('.v').appendChild(f);
+      try { if (typeof window.gtag === 'function') window.gtag('event', 'video_play_click', { video_id: id, page_path: location.pathname }); } catch (e) {}
+      try { (window.dataLayer = window.dataLayer || []).push({ event: 'ac_video_play', video_id: id }); } catch (e) {}
+    });
+  };
+  define('ac-video', function (el) {
+    var t = esc(el.getAttribute('label') || 'AC2027 SoCal launch video'), len = esc(el.getAttribute('length') || '5:18');
+    return '<style>' + BASE + ':host{background:transparent}' +
+      '.v{position:relative;width:100%;aspect-ratio:16/9;border-radius:14px;overflow:hidden;background:' + NAVY + ';box-shadow:0 18px 40px rgba(13,7,69,.18)}' +
+      '.v img,.v iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:0;object-fit:cover;display:block}' +
+      '.p{position:absolute;top:0;left:0;width:100%;height:100%;margin:0;padding:0;border:0;cursor:pointer;display:flex;align-items:center;justify-content:center;' +
+      'background:linear-gradient(180deg,rgba(13,7,69,.05) 0%,rgba(13,7,69,.1) 50%,rgba(13,7,69,.5) 100%)}' +
+      '.p span{width:84px;height:84px;border-radius:50%;background:rgba(250,248,245,.95);display:flex;align-items:center;justify-content:center;box-shadow:0 8px 26px rgba(0,0,0,.28);transition:transform .15s ease}' +
+      '.p:hover span,.p:focus-visible span{transform:scale(1.07)}.p:focus-visible{outline:3px solid ' + GOLD + ';outline-offset:-3px}' +
+      '.p svg{width:30px;height:30px;margin-left:5px;fill:' + MAROON + '}' +
+      '.d{position:absolute;right:14px;bottom:12px;color:#fff;font:500 12px/1 Oswald,sans-serif;letter-spacing:.12em;background:rgba(13,7,69,.72);padding:6px 9px;border-radius:6px}' +
+      '@media(max-width:760px){.v{border-radius:0;box-shadow:none}.p span{width:66px;height:66px}.p svg{width:24px;height:24px}}' +
+      '@media(prefers-reduced-motion:reduce){.p span{transition:none}}</style>' +
+      '<div class="v"><img src="' + ROOT + 'img/video-poster.webp" srcset="' + ROOT + 'img/video-poster-sm.webp 960w, ' + ROOT + 'img/video-poster.webp 1920w" sizes="(max-width:760px) 100vw, 960px" alt="" loading="lazy">' +
+      '<button class="p" type="button" aria-label="Play video: ' + t + ' (' + len + ')"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></span></button>' +
+      '<span class="d" aria-hidden="true">' + len + '</span></div>';
+  }, ['label', 'length']);
 
   /* footer links (the canonical facts block stays native text beside it) */
   define('ac-footer-links', function () {
