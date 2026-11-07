@@ -145,6 +145,12 @@
       if (host.getAttribute('dock') === 'bottom' && window.matchMedia && matchMedia('(max-width:760px)').matches) {
         var q = document.getElementById('QUICK_ACTION_BAR');
         host.style.setProperty('--qab', ((q && q.offsetHeight) || 0) + 'px');
+        /* the Wix box this element sits in still covers the top of the page on phones; let taps
+           pass through it to the header (the bar itself keeps pointer-events) */
+        for (var w = host.parentElement; w && w !== document.body; w = w.parentElement) {
+          w.style.pointerEvents = 'none';
+          if (w.id && /^comp-/.test(w.id)) break;
+        }
         bar.classList.remove('pin'); bar.style.top = '';
         if (!document.getElementById('ac-dock-pad')) {
           var st = document.createElement('style'); st.id = 'ac-dock-pad';
@@ -166,7 +172,7 @@
       return '<a class="it' + (k === 0 ? ' on' : '') + '" href="' + esc(n[2]) + '"><span class="tx">' + esc(n[0]) + '</span><span class="go">' + esc(n[1]) + ' \u2192</span></a>';
     }).join('');
     return '<style>' + BASE + ':host{display:block;height:100%}' +
-      '.bar{position:absolute;top:0;left:calc(50% - 50vw);width:100vw;height:100%;min-height:34px;background:' + MAROON + ';overflow:hidden;z-index:40}' +
+      '.bar{position:absolute;top:0;left:calc(50% - 50vw);width:100vw;height:100%;min-height:34px;background:' + MAROON + ';overflow:hidden;z-index:40;pointer-events:auto}' +
       '.bar.pin{position:fixed;top:0;left:0;right:0;width:100%;height:36px;box-shadow:0 6px 16px -10px rgba(13,7,69,.55)}' +
       '.it{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;gap:14px;padding:0 16px;color:#fff;text-decoration:none;' +
       'opacity:0;transform:translateX(40px);transition:opacity .45s ease,transform .45s ease;pointer-events:none}' +
