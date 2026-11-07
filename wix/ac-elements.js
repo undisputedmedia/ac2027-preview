@@ -148,7 +148,7 @@
         bar.classList.remove('pin'); bar.style.top = '';
         if (!document.getElementById('ac-dock-pad')) {
           var st = document.createElement('style'); st.id = 'ac-dock-pad';
-          st.textContent = '@media(max-width:760px){body{padding-bottom:36px}}'; document.head.appendChild(st);
+          st.textContent = '@media(max-width:760px){#SITE_CONTAINER{padding-bottom:60px}}'; document.head.appendChild(st);
         }
         return;
       }
