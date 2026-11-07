@@ -402,6 +402,13 @@
     if (grad) {
       return '<style>' + host + '.g' + layer + '.g{background:linear-gradient(180deg,#FDCE3E 0%,#FDA04D 34%,#FB5063 67%,#AB284A 100%)}</style><div class="g"></div>';
     }
+    /* church: still of St Andrew from the launch video, light navy wash that deepens toward the form */
+    if (v === 'church') {
+      return '<style>' + host + '.bg' + layer + '.bg{object-fit:cover;object-position:50% 45%}' +
+        '.wash' + layer + '.wash{background:linear-gradient(180deg,rgba(13,7,69,.5) 0%,rgba(13,7,69,.62) 40%,rgba(13,7,69,.85) 100%)}' +
+        '@media(max-width:760px){.wash{background:linear-gradient(180deg,rgba(13,7,69,.55) 0%,rgba(13,7,69,.66) 40%,rgba(13,7,69,.88) 100%)}}</style>' +
+        '<img class="bg" src="' + ROOT + 'img/church.webp" srcset="' + ROOT + 'img/church-sm.webp 1200w, ' + ROOT + 'img/church.webp 2400w" sizes="100vw" alt="" loading="lazy"><div class="wash"></div>';
+    }
     var wash = band ? 'linear-gradient(180deg,rgba(13,7,69,0) 30%,rgba(13,7,69,.72) 100%)' :
       'linear-gradient(180deg,rgba(253,236,226,.94) 0%,rgba(252,212,188,.80) 9%,rgba(251,199,168,.62) 18%,' +
       'rgba(250,190,152,.52) 28%,rgba(250,172,136,.54) 42%,rgba(244,133,105,.62) 58%,rgba(198,74,80,.74) 72%,' +
