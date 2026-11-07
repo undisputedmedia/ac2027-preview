@@ -68,7 +68,7 @@
   }
 
   /* header: logo, nav, Book Room. attribute current="/hotel" */
-  var NAV = [['/', 'Home'], ['/about', 'About'], ['/hotel', 'Hotel'], ['/registration', 'Registration'], ['/sponsorships', 'Sponsors'], ['/faq', 'FAQ'], ['/contact', 'Contact']];
+  var NAV = [['/', 'Home'], ['/about', 'About'], ['/hotel', 'Hotel'], ['/registration', 'Registration'], ['/schedule', 'Schedule'], ['/sponsorships', 'Sponsors'], ['/faq', 'FAQ'], ['/contact', 'Contact']];
   HOOKS['ac-header'] = function (r) {
     var b = r.querySelector('.tog'), bar = r.querySelector('.bar'), host = r.host;
     /* sticky: once the page scrolls, the bar is fixed to the top of the screen at the same
@@ -122,9 +122,9 @@
      Once the header scrolls away the bar pins to the top of the screen.
      Edit NEWS to change the announcements on every page at once. */
   var NEWS = [
-    ['Hotel room block is open', 'Book now', PASSKEY],
-    ['Registration opens soon', 'Get notified', '/get-notified'],
-    ['Sponsorships are open', 'See options', '/sponsorships'],
+    ['Hotel room block is live', 'Book now', PASSKEY],
+    ['Registration opens soon', 'Get updates', '/get-notified'],
+    ['Sponsorship slots available', 'See options', '/sponsorships'],
     ['Volunteers needed', 'Sign up', '/volunteer']
   ];
   HOOKS['ac-newsbar'] = function (r) {
@@ -199,7 +199,7 @@
 
   /* buttons: items="Label|url;Label|url" (url PASSKEY = hotel link) styles="navy,outline" align="left|center" */
   define('ac-buttons', function (el) {
-    var items = (el.getAttribute('items') || 'Reserve Your Room|PASSKEY;Get Notified|/get-notified').split(';');
+    var items = (el.getAttribute('items') || 'Reserve Your Room|PASSKEY;Get Updates|/get-notified').split(';');
     var styles = (el.getAttribute('styles') || 'navy,outline').split(',');
     var align = el.getAttribute('align') === 'left' ? 'flex-start' : 'center';
     var html = items.map(function (it, i) {
