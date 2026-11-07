@@ -108,7 +108,7 @@
       (compact ? '@media(max-width:760px){:host{background:transparent}.bar{height:52px;gap:8px;padding:0 8px;background:transparent}.bar.pin:before{display:none}' +
         '.home{display:flex;align-items:center;justify-content:center;flex:none;width:44px;height:44px;border-radius:50%;background:' + SHORE + ';box-shadow:0 4px 14px rgba(13,7,69,.22)}' +
         '.mark{height:34px}.bt{display:none}.tog{background:' + SHORE + ';border-color:transparent;padding:9px 15px;font-size:12px;box-shadow:0 4px 14px rgba(13,7,69,.22)}' +
-        '.cta{font-size:11px;padding:10px 15px;box-shadow:0 4px 14px rgba(13,7,69,.25),inset 0 0 0 1.5px rgba(250,248,245,.45)}' +
+        '.cta{display:none}' +
         '.open nav{top:58px;left:8px;right:8px;border-radius:14px;border:0}}' : '') +
       '</style>' +
       '<div class="bar"><a class="home" href="/"><img class="mark" src="' + ROOT + 'img/mark-192.webp" width="192" height="199" decoding="async" alt="58th Biennial Antiochian Archdiocese Convention ' + MDASH + ' SoCal"></a>' +
