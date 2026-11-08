@@ -434,8 +434,8 @@
       var im = esc(el.getAttribute('img') || 'parish-aerial'), alt = esc(el.getAttribute('alt') || ''), pos = esc(el.getAttribute('pos') || '50% 50%');
       var navy = el.getAttribute('wash') === 'navy';
       return '<style>' + host + '.bg' + layer + '.bg{object-fit:cover;object-position:' + pos + '}' +
-        (navy ? '.wash' + layer + '.wash{background:linear-gradient(180deg,rgba(13,7,69,.8) 0%,rgba(13,7,69,.62) 50%,rgba(13,7,69,.4) 100%)}' +
-          '@media(max-width:760px){.wash{background:linear-gradient(180deg,rgba(13,7,69,.84) 0%,rgba(13,7,69,.7) 55%,rgba(13,7,69,.5) 100%)}}' : '') + '</style>' +
+        (navy ? '.wash' + layer + '.wash{background:linear-gradient(180deg,rgba(13,7,69,.85) 0%,rgba(13,7,69,.65) 45%,rgba(13,7,69,.3) 100%)}' +
+          '@media(max-width:760px){.wash{background:linear-gradient(180deg,rgba(13,7,69,.86) 0%,rgba(13,7,69,.72) 50%,rgba(13,7,69,.2) 100%)}}' : '') + '</style>' +
         '<img class="bg" src="' + ROOT + 'img/' + im + '.webp" srcset="' + ROOT + 'img/' + im + '-sm.webp 1200w, ' + ROOT + 'img/' + im + '.webp 2400w" sizes="100vw" alt="' + alt + '"' +
         (navy ? ' fetchpriority="high"' : ' loading="lazy"') + '>' + (navy ? '<div class="wash"></div>' : '');
     }
