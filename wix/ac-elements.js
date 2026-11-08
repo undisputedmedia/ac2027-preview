@@ -497,6 +497,16 @@
   var SOCIAL = [['Instagram', 'https://instagram.com/ac2027socal'], ['Facebook', 'https://facebook.com/ac2027socal'], ['YouTube', 'https://youtube.com/@ac2027socal'],
     ['X', 'https://x.com/ac2027socal'], ['TikTok', 'https://www.tiktok.com/@ac2027socal']];
   HOOKS['ac-links'] = function (r) {
+    /* Wix may place the element off-centre on wide screens; centre the column on the viewport */
+    var host = r.host, wrap = r.querySelector('.wrap');
+    function centre() {
+      if (!wrap) return; wrap.style.marginLeft = ''; wrap.style.marginRight = '';
+      var hl = host.getBoundingClientRect().left, hw = host.offsetWidth, ww = wrap.offsetWidth, vw = document.documentElement.clientWidth;
+      var want = Math.max(0, Math.min(hw - ww, (vw - ww) / 2 - hl));
+      wrap.style.marginLeft = want + 'px'; wrap.style.marginRight = '0';
+    }
+    centre(); setTimeout(centre, 300);
+    if (!host._acCentre) { host._acCentre = true; window.addEventListener('resize', centre); }
     if (r._acLinks) return; r._acLinks = true;
     r.addEventListener('click', function (e) {
       var a = e.target && e.target.closest ? e.target.closest('a[href]') : null; if (!a) return;

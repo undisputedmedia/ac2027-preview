@@ -6,11 +6,12 @@
     '/': 'index.html', '/hotel': 'hotel.html', '/registration': 'registration.html', '/schedule': 'schedule.html',
     '/faq': 'faq.html', '/contact': 'contact.html', '/host-parish': 'host-parish.html', '/journal': 'journal.html',
     '/get-notified': 'get-notified.html',
-    '/about': 'about.html', '/sponsorships': 'sponsorships.html',
+    '/sponsorships': 'sponsorships.html',
     '/vendors': 'vendors.html', '/volunteer': 'volunteer.html',
-    '/guides': 'guides.html', '/first-timers-guide': 'first-timers-guide.html', '/travel': 'travel.html', '/anaheim': 'anaheim.html',
-    '/riverside': 'riverside.html', '/convention-history': 'convention-history.html', '/antiochian-orthodox': 'antiochian-orthodox.html',
-    '/privacy-policy': 'privacy.html'
+    '/guides': 'guides.html', '/first-timers-guide': 'first-timers-guide.html', '/travel': 'travel.html',
+    '/riverside': 'riverside.html', '/privacy-policy': 'privacy.html', '/links': 'links.html',
+    /* archived Nov 7 2026: hidden in Wix, these URLs redirect to Home */
+    '/about': 'index.html', '/anaheim': 'index.html', '/convention-history': 'index.html', '/antiochian-orthodox': 'index.html'
   };
   function fix(root) {
     root.querySelectorAll('a[href]').forEach(function (a) {
@@ -36,7 +37,7 @@
     });
   }
   if (window.customElements && customElements.whenDefined) {
-    ['ac-header', 'ac-buttons', 'ac-ratecard', 'ac-footer-links', 'ac-journal-book'].forEach(function (t) { customElements.whenDefined(t).then(scan); });
+    ['ac-header', 'ac-buttons', 'ac-ratecard', 'ac-footer-links', 'ac-journal-book', 'ac-links'].forEach(function (t) { customElements.whenDefined(t).then(scan); });
   }
   window.addEventListener('load', scan);
   setTimeout(scan, 600);

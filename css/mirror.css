@@ -24,6 +24,8 @@ section{position:relative;width:100%;overflow:visible}
 .acform .row{display:flex;gap:12px;align-items:flex-end}.acform .row label{flex:1;margin-bottom:0}
 .acform button{height:42px;width:190px;background:#0d0745;color:#faf8f5;border:0;font:400 15px 'Poppins',sans-serif;cursor:pointer;white-space:nowrap}
 .acform .chk{display:flex;gap:12px;align-items:flex-start;margin:20px 0 0;font-size:15px;line-height:1.55}.acform .chk input{margin-top:5px;width:16px;height:16px;accent-color:#0d0745}
+.acform textarea{display:block;width:100%;box-sizing:border-box;margin-top:6px;min-height:96px;border:0;border-bottom:1.5px solid #0d0745;border-radius:0;padding:6px;font:14px 'Poppins',sans-serif;background:transparent;color:#0d0745;resize:vertical}
+.acform .btnrow{margin-top:20px}
 .mirror-badge{position:fixed;left:12px;bottom:12px;z-index:99;font:500 11px/1 'Oswald',sans-serif;letter-spacing:.12em;text-transform:uppercase;background:rgba(13,7,69,.86);color:#faf8f5;padding:8px 12px;border-radius:999px;pointer-events:none}
 /* Entrance motion: mirrors the Wix "Float in" animation (900ms, from below, staggered per section, plays once). */
 .ac-anim{opacity:0;transform:translateY(28px);transition:opacity .9s cubic-bezier(.22,.61,.36,1),transform .9s cubic-bezier(.22,.61,.36,1)}
