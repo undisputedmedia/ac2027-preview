@@ -2,7 +2,7 @@
    Text that crawlers must read lives in native Wix text, not here.
    Wix: Add > Embed Code > Custom Element > Server URL =
    https://undisputedmedia.github.io/ac2027-preview/wix/ac-elements.js
-   Tags: ac-header, ac-newsbar, ac-ratecard, ac-buttons, ac-hero-bg, ac-footer-links, ac-journal-samples, ac-journal-book, ac-schedule, ac-sponsors, ac-video
+   Tags: ac-header, ac-newsbar, ac-ratecard, ac-buttons, ac-hero-bg, ac-footer-links, ac-journal-samples, ac-journal-book, ac-schedule, ac-sponsors, ac-video, ac-links
    Keep this file ASCII-only (use \u escapes) so it renders the same under any charset. */
 (function () {
   var ROOT = 'https://undisputedmedia.github.io/ac2027-preview/';
@@ -480,6 +480,53 @@
       'referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>';
   }, ['label', 'video']);
 
+  /* links: the /links page (a link-in-bio hub for social bios, signatures and QR codes).
+     Edit LINKS / SOCIAL to change the buttons. Every tap is reported as GA4 event "links_click"
+     (link_text = button label), on top of the usual outbound tracking. */
+  var LINKS = [
+    ['Book Your Room', PASSKEY, 'gold'],
+    ['Get Updates', '/get-notified'],
+    ['Registration', '/registration'],
+    ['Sponsors and Journal', '/sponsorships'],
+    ['Volunteer', '/volunteer'],
+    ['Vendors', '/vendors'],
+    ['Schedule', '/schedule'],
+    ['Host Parish', '/host-parish'],
+    ['Official Website', '/']
+  ];
+  var SOCIAL = [['Instagram', 'https://instagram.com/ac2027socal'], ['Facebook', 'https://facebook.com/ac2027socal'], ['YouTube', 'https://youtube.com/@ac2027socal'],
+    ['X', 'https://x.com/ac2027socal'], ['TikTok', 'https://www.tiktok.com/@ac2027socal']];
+  HOOKS['ac-links'] = function (r) {
+    if (r._acLinks) return; r._acLinks = true;
+    r.addEventListener('click', function (e) {
+      var a = e.target && e.target.closest ? e.target.closest('a[href]') : null; if (!a) return;
+      var p = { link_text: (a.textContent || '').replace(/\s+/g, ' ').trim().slice(0, 60), link_url: a.getAttribute('href'), page_path: location.pathname, transport_type: 'beacon' };
+      try { if (typeof window.gtag === 'function') window.gtag('event', 'links_click', p); } catch (err) {}
+      try { (window.dataLayer = window.dataLayer || []).push({ event: 'ac_links_click', link_text: p.link_text, link_url: p.link_url }); } catch (err) {}
+    });
+  };
+  define('ac-links', function () {
+    var btns = LINKS.map(function (l) {
+      return '<a class="btn ' + (l[2] || 'w') + '" href="' + esc(l[1]) + '"' + tgt(l[1]) + '>' + esc(l[0]) + '</a>';
+    }).join('');
+    var soc = SOCIAL.map(function (l) { return '<a class="s" href="' + l[1] + '" target="_blank" rel="noopener">' + l[0] + '</a>'; }).join('');
+    return '<style>' + BASE + ':host{background:' + NAVY + ';min-height:100%}' +
+      '.w{background:' + SHORE + ';color:' + NAVY + '}' +
+      '.wrap{max-width:440px;margin:0 auto;padding:44px 20px 56px;text-align:center}' +
+      '.mark{width:116px;height:auto;display:block;margin:0 auto 14px}' +
+      'h1{font-family:Oswald,sans-serif;font-weight:500;font-size:30px;letter-spacing:.04em;color:#fff;margin:0;line-height:1.15;text-transform:uppercase}' +
+      '.sub{font-size:14px;color:rgba(250,248,245,.78);margin:8px 0 28px;line-height:1.55}' +
+      '.list{display:flex;flex-direction:column;gap:12px}.list .btn{display:block;width:100%;padding:15px 20px;font-size:15px}' +
+      '.soc{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin:30px 0 0}' +
+      '.s{font-family:Oswald,sans-serif;font-size:12px;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;color:' + GOLD + ';padding:8px 14px;border-radius:999px;box-shadow:inset 0 0 0 1px rgba(253,206,62,.45)}' +
+      '.s:hover{background:rgba(253,206,62,.12)}' +
+      '.host{font-size:12px;color:rgba(250,248,245,.6);margin:26px 0 0;line-height:1.6}</style>' +
+      '<div class="wrap"><img class="mark" src="' + ROOT + 'img/mark-keyline.webp" width="420" height="436" alt="58th Biennial Antiochian Archdiocese Convention ' + MDASH + ' SoCal">' +
+      '<h1>AC2027 SoCal</h1><p class="sub">The 58th Biennial Antiochian Archdiocese Convention<br>July 19' + NDASH + '25, 2027 ' + MIDDOT + ' Hilton Anaheim</p>' +
+      '<div class="list">' + btns + '</div><div class="soc">' + soc + '</div>' +
+      '<p class="host">Hosted by Saint Andrew Orthodox Christian Church, Riverside, California</p></div>';
+  });
+
   /* footer links (the canonical facts block stays native text beside it) */
   define('ac-footer-links', function () {
     var pages = [['/', 'Home'], ['/hotel', 'Hotel &amp; Room Block'], ['/registration', 'Registration'],
@@ -488,7 +535,7 @@
       ['https://saintandrew.churchofficechms.com/external/form/fceb608b-be91-4ab0-9638-38cae4ff47f7', 'Support the Convention']];
     var social = [['https://instagram.com/ac2027socal', 'Instagram'], ['https://facebook.com/ac2027socal', 'Facebook'], ['https://youtube.com/@ac2027socal', 'YouTube'], ['https://x.com/ac2027socal', 'X'], ['https://www.tiktok.com/@ac2027socal', 'TikTok']];
     var trip = [['/guides', 'All Guides'], ['/first-timers-guide', 'First-Timer\u2019s Guide'], ['/travel', 'Travel &amp; Parking'],
-      ['/riverside', 'A Day in Riverside']];
+      ['/riverside', 'A Day in Riverside'], ['/links', 'All Links']];
     function col(t, list) {
       return '<div><h4>' + t + '</h4><ul>' + list.map(function (l) { return '<li><a href="' + l[0] + '"' + tgt(l[0]) + '>' + l[1] + '</a></li>'; }).join('') + '</ul></div>';
     }
