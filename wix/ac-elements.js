@@ -14,6 +14,8 @@
     document.head.appendChild(s);
   }
   var PASSKEY = 'https://book.passkey.com/go/2027SoCalAntiochianArchdiocese';
+  /* links that leave the site (hotel booking, social, forms) open in a new tab */
+  function tgt(u) { return /^https?:/.test(u) ? ' target="_blank" rel="noopener"' : ''; }
   var NAVY = '#0D0745', SHORE = '#FAF8F5', GOLD = '#FDCE3E', MAROON = '#90294F';
   var NDASH = '\u2013', MIDDOT = '\u00b7', MDASH = '\u2014';
   var BASE = ':host{display:block;font-family:Poppins,Arial,sans-serif;color:' + NAVY + ';box-sizing:border-box}*{box-sizing:border-box}' +
@@ -68,7 +70,7 @@
   }
 
   /* header: logo, nav, Book Room. attribute current="/hotel" */
-  var NAV = [['/', 'Home'], ['/about', 'About'], ['/hotel', 'Hotel'], ['/registration', 'Registration'], ['/schedule', 'Schedule'], ['/sponsorships', 'Sponsors'], ['/faq', 'FAQ'], ['/contact', 'Contact']];
+  var NAV = [['/', 'Home'], ['/hotel', 'Hotel'], ['/registration', 'Registration'], ['/schedule', 'Schedule'], ['/sponsorships', 'Sponsors and Journal'], ['/faq', 'FAQ'], ['/contact', 'Contact']];
   HOOKS['ac-header'] = function (r) {
     var b = r.querySelector('.tog'), bar = r.querySelector('.bar'), host = r.host;
     /* sticky: once the page scrolls, the bar is fixed to the top of the screen at the same
@@ -89,7 +91,7 @@
   };
   define('ac-header', function (el) {
     var cur = el.getAttribute('current') || '', compact = el.hasAttribute('compact');
-    var links = NAV.map(function (n) { return '<a href="' + n[0] + '"' + (n[0] === cur ? ' class="cur"' : '') + '>' + n[1] + '</a>'; }).join('');
+    var links = NAV.map(function (n) { return '<a href="' + n[0] + '"' + (n[0] === cur || (n[0] === '/sponsorships' && cur === '/journal') ? ' class="cur"' : '') + '>' + n[1] + '</a>'; }).join('');
     return '<style>' + BASE +
       ':host{background:' + SHORE + '}.bar{height:76px;display:flex;align-items:center;gap:20px;padding:0 4px;background:' + SHORE + '}' +
       '.bar.pin{position:fixed;top:0;z-index:60}.bar.pin:before{content:"";position:absolute;top:0;bottom:0;left:-100vw;right:-100vw;background:' + SHORE + ';z-index:-1}' +
@@ -169,7 +171,7 @@
   define('ac-newsbar', function (el) {
     var dock = el.getAttribute('dock') === 'bottom';
     var list = NEWS.map(function (n, k) {
-      return '<a class="it' + (k === 0 ? ' on' : '') + '" href="' + esc(n[2]) + '"><span class="tx">' + esc(n[0]) + '</span><span class="go">' + esc(n[1]) + ' \u2192</span></a>';
+      return '<a class="it' + (k === 0 ? ' on' : '') + '" href="' + esc(n[2]) + '"' + tgt(n[2]) + '><span class="tx">' + esc(n[0]) + '</span><span class="go">' + esc(n[1]) + ' \u2192</span></a>';
     }).join('');
     return '<style>' + BASE + ':host{display:block;height:100%}' +
       '.bar{position:absolute;top:0;left:calc(50% - 50vw);width:100vw;height:100%;min-height:34px;background:' + MAROON + ';overflow:hidden;z-index:40;pointer-events:auto}' +
@@ -200,7 +202,7 @@
       '<div class="card"><p class="rate">$209</p><p class="per">per night</p><ul>' +
       '<li>Room types <b>King or two Queens</b></li><li>Block window <b>July 17' + NDASH + '25, 2027</b></li>' +
       '<li>Prepayment <b>Optional</b></li><li>Group booking <b>Multiple rooms, one booking</b></li></ul>' +
-      '<a class="btn gold" href="' + PASSKEY + '">Reserve Your Room</a></div>';
+      '<a class="btn gold" href="' + PASSKEY + '"' + tgt(PASSKEY) + '>Reserve Your Room</a></div>';
   });
 
   /* buttons: items="Label|url;Label|url" (url PASSKEY = hotel link) styles="navy,outline" align="left|center" */
@@ -210,7 +212,7 @@
     var align = el.getAttribute('align') === 'left' ? 'flex-start' : 'center';
     var html = items.map(function (it, i) {
       var p = it.split('|'); var url = p[1] === 'PASSKEY' ? PASSKEY : p[1];
-      return '<a class="btn ' + esc(styles[i] || 'navy') + '" href="' + esc(url) + '">' + esc(p[0]) + '</a>';
+      return '<a class="btn ' + esc(styles[i] || 'navy') + '" href="' + esc(url) + '"' + tgt(url) + '>' + esc(p[0]) + '</a>';
     }).join('');
     return '<style>' + BASE + '.row{display:flex;gap:13px;flex-wrap:wrap;justify-content:' + align + '}' +
       '@media(max-width:600px){.btn{width:100%}}</style><div class="row">' + html + '</div>';
@@ -480,15 +482,15 @@
 
   /* footer links (the canonical facts block stays native text beside it) */
   define('ac-footer-links', function () {
-    var pages = [['/', 'Home'], ['/about', 'About the Convention'], ['/hotel', 'Hotel &amp; Room Block'], ['/registration', 'Registration'],
+    var pages = [['/', 'Home'], ['/hotel', 'Hotel &amp; Room Block'], ['/registration', 'Registration'],
       ['/schedule', 'Schedule'], ['/faq', 'FAQ'], ['/host-parish', 'Host Parish'], ['/contact', 'Contact']];
     var involved = [['/sponsorships', 'Sponsorships'], ['/journal', 'Legacy Journal'], ['/vendors', 'Vendors'], ['/volunteer', 'Volunteer'],
       ['https://saintandrew.churchofficechms.com/external/form/fceb608b-be91-4ab0-9638-38cae4ff47f7', 'Support the Convention']];
     var social = [['https://instagram.com/ac2027socal', 'Instagram'], ['https://facebook.com/ac2027socal', 'Facebook'], ['https://youtube.com/@ac2027socal', 'YouTube'], ['https://x.com/ac2027socal', 'X'], ['https://www.tiktok.com/@ac2027socal', 'TikTok']];
-    var trip = [['/guides', 'All Guides'], ['/first-timers-guide', 'First-Timer\u2019s Guide'], ['/travel', 'Travel &amp; Parking'], ['/anaheim', 'Anaheim Guide'],
-      ['/riverside', 'A Day in Riverside'], ['/convention-history', 'Convention History'], ['/antiochian-orthodox', 'The Antiochian<br>Orthodox Church']];
+    var trip = [['/guides', 'All Guides'], ['/first-timers-guide', 'First-Timer\u2019s Guide'], ['/travel', 'Travel &amp; Parking'],
+      ['/riverside', 'A Day in Riverside']];
     function col(t, list) {
-      return '<div><h4>' + t + '</h4><ul>' + list.map(function (l) { return '<li><a href="' + l[0] + '">' + l[1] + '</a></li>'; }).join('') + '</ul></div>';
+      return '<div><h4>' + t + '</h4><ul>' + list.map(function (l) { return '<li><a href="' + l[0] + '"' + tgt(l[0]) + '>' + l[1] + '</a></li>'; }).join('') + '</ul></div>';
     }
     return '<style>' + BASE + '.g{display:grid;grid-template-columns:1fr 1fr;gap:34px}' +
       'h4{font-family:Oswald,sans-serif;font-weight:500;font-size:13px;letter-spacing:.2em;text-transform:uppercase;color:' + GOLD + ';margin:0 0 16px}' +
