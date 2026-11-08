@@ -428,11 +428,16 @@
     if (grad) {
       return '<style>' + host + '.g' + layer + '.g{background:linear-gradient(180deg,#FDCE3E 0%,#FDA04D 34%,#FB5063 67%,#AB284A 100%)}</style><div class="g"></div>';
     }
-    /* photo: a plain full-bleed photograph from img/ (no wash). attributes img="parish-aerial", alt, pos="50% 50%" */
+    /* photo: a full-bleed photograph from img/. attributes img="parish-aerial", alt, pos="50% 50%".
+       wash="navy" adds a navy overlay (darkest at the top, where hero text sits) and loads the photo eagerly */
     if (v === 'photo') {
       var im = esc(el.getAttribute('img') || 'parish-aerial'), alt = esc(el.getAttribute('alt') || ''), pos = esc(el.getAttribute('pos') || '50% 50%');
-      return '<style>' + host + '.bg' + layer + '.bg{object-fit:cover;object-position:' + pos + '}</style>' +
-        '<img class="bg" src="' + ROOT + 'img/' + im + '.webp" srcset="' + ROOT + 'img/' + im + '-sm.webp 1200w, ' + ROOT + 'img/' + im + '.webp 2400w" sizes="100vw" alt="' + alt + '" loading="lazy">';
+      var navy = el.getAttribute('wash') === 'navy';
+      return '<style>' + host + '.bg' + layer + '.bg{object-fit:cover;object-position:' + pos + '}' +
+        (navy ? '.wash' + layer + '.wash{background:linear-gradient(180deg,rgba(13,7,69,.8) 0%,rgba(13,7,69,.62) 50%,rgba(13,7,69,.4) 100%)}' +
+          '@media(max-width:760px){.wash{background:linear-gradient(180deg,rgba(13,7,69,.84) 0%,rgba(13,7,69,.7) 55%,rgba(13,7,69,.5) 100%)}}' : '') + '</style>' +
+        '<img class="bg" src="' + ROOT + 'img/' + im + '.webp" srcset="' + ROOT + 'img/' + im + '-sm.webp 1200w, ' + ROOT + 'img/' + im + '.webp 2400w" sizes="100vw" alt="' + alt + '"' +
+        (navy ? ' fetchpriority="high"' : ' loading="lazy"') + '>' + (navy ? '<div class="wash"></div>' : '');
     }
     /* church: still of St Andrew from the launch video, light navy wash that deepens toward the form */
     if (v === 'church') {
