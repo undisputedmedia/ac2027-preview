@@ -70,7 +70,7 @@
   }
 
   /* header: logo, nav, Book Room. attribute current="/hotel" */
-  var NAV = [['/', 'Home'], ['/hotel', 'Hotel'], ['/registration', 'Registration'], ['/schedule', 'Schedule'], ['/sponsorships', 'Sponsors and Journal'], ['/faq', 'FAQ'], ['/contact', 'Contact']];
+  var NAV = [['/', 'Home'], ['/hotel', 'Hotel'], ['/registration', 'Registration'], ['/schedule', 'Schedule'], ['/sponsorships', 'Sponsors &amp; Journal'], ['/faq', 'FAQ'], ['/contact', 'Contact']];
   HOOKS['ac-header'] = function (r) {
     var b = r.querySelector('.tog'), bar = r.querySelector('.bar'), host = r.host;
     /* sticky: once the page scrolls, the bar is fixed to the top of the screen at the same
