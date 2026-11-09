@@ -487,7 +487,7 @@
     ['Book Your Room', PASSKEY, 'gold'],
     ['Get Updates', '/get-notified'],
     ['Registration', '/registration'],
-    ['Sponsors and Journal', '/sponsorships'],
+    ['Sponsors & Journal', '/sponsorships'],
     ['Volunteer', '/volunteer'],
     ['Vendors', '/vendors'],
     ['Schedule', '/schedule'],
