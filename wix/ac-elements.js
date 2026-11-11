@@ -31,7 +31,7 @@
      elements report their own outbound clicks. Distinct event names, so nothing
      double-counts if a tag ever does see through the shadow root:
        hotel_block_click  -> book.passkey.com            (GA4 key event; Meta HotelBlockClick)
-       chms_form_click    -> *.churchofficechms.com      (sponsor, journal, volunteer, donate)
+       chms_form_click    -> *.churchofficechms.com      (sponsor, journal, donate)
        registration_click -> REG_HOST, once registration opens
        outbound_link      -> any other external link (social etc.)
      Every click is also pushed to dataLayer as event "ac_link_click" for GTM. */
@@ -126,8 +126,7 @@
   var NEWS = [
     ['Hotel room block is live', 'Book now', PASSKEY],
     ['Registration opens soon', 'Get updates', '/get-notified'],
-    ['Sponsorship slots available', 'See options', '/sponsorships'],
-    ['Volunteers needed', 'Sign up', '/volunteer']
+    ['Sponsorship slots available', 'See options', '/sponsorships']
   ];
   HOOKS['ac-newsbar'] = function (r) {
     var host = r.host, bar = r.querySelector('.bar'), items = r.querySelectorAll('.it'), i = 0, paused = false;
@@ -488,7 +487,6 @@
     ['Get Updates', '/get-notified'],
     ['Registration', '/registration'],
     ['Sponsors & Journal', '/sponsorships'],
-    ['Volunteer', '/volunteer'],
     ['Vendors', '/vendors'],
     ['Schedule', '/schedule'],
     ['Host Parish', '/host-parish'],
@@ -541,7 +539,7 @@
   define('ac-footer-links', function () {
     var pages = [['/', 'Home'], ['/hotel', 'Hotel &amp; Room Block'], ['/registration', 'Registration'],
       ['/schedule', 'Schedule'], ['/faq', 'FAQ'], ['/host-parish', 'Host Parish'], ['/contact', 'Contact']];
-    var involved = [['/sponsorships', 'Sponsorships'], ['/journal', 'Legacy Journal'], ['/vendors', 'Vendors'], ['/volunteer', 'Volunteer'],
+    var involved = [['/sponsorships', 'Sponsorships'], ['/journal', 'Legacy Journal'], ['/vendors', 'Vendors'],
       ['https://saintandrew.churchofficechms.com/external/form/fceb608b-be91-4ab0-9638-38cae4ff47f7', 'Support the Convention']];
     var social = [['https://instagram.com/ac2027socal', 'Instagram'], ['https://facebook.com/ac2027socal', 'Facebook'], ['https://youtube.com/@ac2027socal', 'YouTube'], ['https://x.com/ac2027socal', 'X'], ['https://www.tiktok.com/@ac2027socal', 'TikTok']];
     var trip = [['/guides', 'All Guides'], ['/first-timers-guide', 'First-Timer\u2019s Guide'], ['/travel', 'Travel &amp; Parking'],
