@@ -126,7 +126,8 @@
   var NEWS = [
     ['Hotel room block is live', 'Book now', PASSKEY],
     ['Registration opens soon', 'Get updates', '/get-notified'],
-    ['Sponsorship slots available', 'See options', '/sponsorships']
+    ['Sponsorship tiers available', 'See options', '/sponsorships'],
+    ['Vendor spaces now available', 'Learn more', '/vendors']
   ];
   HOOKS['ac-newsbar'] = function (r) {
     var host = r.host, bar = r.querySelector('.bar'), items = r.querySelectorAll('.it'), i = 0, paused = false;
