@@ -31,8 +31,9 @@
      elements report their own outbound clicks. Distinct event names, so nothing
      double-counts if a tag ever does see through the shadow root:
        hotel_block_click  -> book.passkey.com            (GA4 key event; Meta HotelBlockClick)
-       chms_form_click    -> *.churchofficechms.com      (sponsor, journal, donate)
-       registration_click -> REG_HOST, once registration opens
+       chms_form_click    -> *.churchofficechms.com      (sponsor, journal, donate;
+                             Meta SponsorFormClick / JournalFormClick / SupportFormClick)
+       registration_click -> REG_HOST, once registration opens (Meta RegistrationClick)
        outbound_link      -> any other external link (social etc.)
      Every click is also pushed to dataLayer as event "ac_link_click" for GTM. */
   var REG_HOST = '';
@@ -45,7 +46,17 @@
     var p = { link_url: u.origin + u.pathname, link_domain: h, link_text: (a.textContent || '').replace(/\s+/g, ' ').trim().slice(0, 100),
       ac_element: el, page_path: location.pathname, transport_type: 'beacon' };
     try { if (typeof window.gtag === 'function') window.gtag('event', ev, p); } catch (e) {}
-    try { if (typeof window.fbq === 'function' && ev === 'hotel_block_click') window.fbq('trackCustom', 'HotelBlockClick', { page_path: p.page_path }); } catch (e) {}
+    /* Meta: one custom event per conversion. Both church forms (fa262a4f = sponsor tiers and
+       Legacy Journal, fceb608b = event sponsorships and Support the Convention) are split by
+       where the click happened. */
+    var mev = ev === 'hotel_block_click' ? 'HotelBlockClick' : ev === 'registration_click' ? 'RegistrationClick' : '';
+    if (ev === 'chms_form_click') {
+      var cls = (a.getAttribute('class') || ''), path = location.pathname, t = p.link_text.toLowerCase();
+      mev = el === 'ac-footer-links' ? 'SupportFormClick'
+        : (/journal|placement/.test(t) || /(^|\s)jp(\s|$)/.test(cls) || el === 'ac-journal-book' || /journal/.test(path)) ? 'JournalFormClick'
+        : (/sponsor/.test(t) || el === 'ac-sponsors' || /sponsor/.test(path)) ? 'SponsorFormClick' : 'SupportFormClick';
+    }
+    try { if (mev && typeof window.fbq === 'function') window.fbq('trackCustom', mev, { page_path: p.page_path, link_text: p.link_text }); } catch (e) {}
     try { (window.dataLayer = window.dataLayer || []).push({ event: 'ac_link_click', ac_event: ev, link_url: p.link_url, link_domain: h, link_text: p.link_text, ac_element: el }); } catch (e) {}
   }
   function define(name, render, attrs) {
